@@ -4,10 +4,17 @@ import { supabase } from "../supabaseClient";
  const CartContext=createContext();
 
  export const CartProvider=({children})=>{
+    const [productname,setProductName]=useState('')
+    const [category,setCategory]=useState('');
+    const [price,setPrice]=useState('');
+    const [stock,setStock]=useState('');
+    const [url,setUrl]=useState('');
+    const [handleEdit,sethandleEdit]=useState(false)
+    const [pId,setPid]=useState(0);
 
     // const [data,setData]=useState([]);
 
-   const addData=async(productname,category,price,stock,url)=>{
+   const addData=async()=>{
     const {error}=await supabase.from("admin_table").insert([{productname,category,price,stock,url}])
     // if(error){
     //   toast.error(error.message)
@@ -18,7 +25,7 @@ import { supabase } from "../supabaseClient";
     return error
   }
   const fetchData=async()=>{
-    const {data,error}=await supabase.from("admin_table").select("*")
+    const {data,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
     if(!error){
       // setData(data)
       console.log(data);
@@ -35,13 +42,17 @@ import { supabase } from "../supabaseClient";
     return error
 
   }
-  const editdata=async(id,productname,category,price,stock,url)=>{
+  const editData=async(id,productname,category,price,stock,url)=>{
    const {error}=await supabase.from('admin_table').update({productname,category,price,stock,url}).eq('id',id)
-   return error
+  //  console.log(productname);
+  //  return error
+  // return productname
+  // alert(productname)
+  return error
   }
 
   return(
-    <CartContext.Provider value={{fetchData,addData,deleteData}}>
+    <CartContext.Provider value={{setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,url,setUrl,handleEdit,sethandleEdit}}>
         {children}
     </CartContext.Provider>
   )
