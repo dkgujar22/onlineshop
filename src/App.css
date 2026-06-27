@@ -15,9 +15,12 @@
   width: 30px;
   height: 30px;
 }
-.sidebar {
-  width: 280px;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+
+.productinput-width{
+  max-width: 500px;
+  min-width: 250px;
+
+}
+.email-fontsize{
+  font-size: 15px;
 }

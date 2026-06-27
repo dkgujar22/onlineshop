@@ -48,39 +48,44 @@ const Addproductpage = () => {
   }
   
   return (
-    <div className='text-center mt-5'>
+    <div className='text-center mt-3'>
+      <h1 className=''>Add Product</h1>
       <input type="text"
       placeholder='Enter Product name'
       value={productname}
       onChange={(e)=>setProductName(e.target.value)}
-      className='p-2 mb-1 set-input-width' />
+      className='p-2 mb-1 w-50' />
       <br />
       <input type="text"
       placeholder='Enter category'
       value={category}
       onChange={(e)=>setCategory(e.target.value)}
-      className='p-2 mb-1 set-input-width'/>
+      className='p-2 mb-1 w-50'/>
       <br />
       <input type="text"
       placeholder='Enter Price'
       value={price}
       onChange={(e)=>setPrice(e.target.value)}
-      className='p-2 mb-1 set-input-width' />
+      className='p-2 mb-1 w-50' />
       <br />
       <input type="number"
-      placeholder='enter stock'
+      placeholder='Enter stock'
       value={stock}
       onChange={(e)=>setStock(e.target.value)}
-      className='p-2 mb-1 set-input-width' />
+      className='p-2 mb-1 w-50' />
       <br />
       <input type="url"
-      placeholder='enter product image'
+      placeholder='Enter product image'
       value={url}
       onChange={(e)=>setUrl(e.target.value)}
-      className='p-2 mb-1 set-input-width' />
+      className='p-2 mb-1 w-50' />
       <br />
-      {handleEdit?<button onClick={handleUpdate}>Edit product</button>:
-      <button onClick={handleAddproduct}>Add product</button>}
+      {/* {handleEdit?<button onClick={handleUpdate}>Edit product</button>:
+      <button onClick={handleAddproduct}>Add product</button>} */}
+
+      {handleEdit?<button type="button"  onClick={handleUpdate} class="mb-2 btn btn-primary">Edit Product</button>:
+      <button type="button"  onClick={handleAddproduct} class="mb-2 btn btn-primary">Add Product</button>
+}
 
       
     </div>

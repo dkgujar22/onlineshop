@@ -36,7 +36,7 @@ const Login = () => {
        /> <br />
        {/* <button className='px-2 py-1 mb-2 btn-color set-input-width text-light border-0 ' onClick={handleLogin}>Login</button> <br /> */}
        <button type="button"  onClick={handleLogin} class="px-2 py-1 mb-2 set-input-width btn btn-primary">Login</button><br />
-       <span className='mt-2 p-2'>Not Have an account? <NavLink to="/signup" onClick={()=>navigate('/signup')}>signup</NavLink></span>  <br />
+       <span className='mt-2 p-2'>Don't Have an account? <NavLink to="/signup" onClick={()=>navigate('/signup')}>signup</NavLink></span>  <br />
        <button className='px-2 py-1 mb-2 bg-transparent mt-1 set-input-width' onClick={googleLogin}><img className='g-icon-w me-2' src={googleIcon} alt="icon" />Continue with Google</button>
     </div>
   )
