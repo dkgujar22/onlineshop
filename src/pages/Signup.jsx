@@ -18,26 +18,27 @@ const Signup = () => {
 
   }
   return (
-    <div className='text-center'>
-      <h1>Signup</h1>
-      <input type="text"
-      placeholder='enter your name'
+    <div className='shadow p-3 mb-5 bg-body rounded text-center d-block mx-auto p-2 mt-5 form-width'>
+      <h1 className='mb-3'>Signup</h1>
+      <input className='set-input-width p-2 mb-2' type="text"
+      placeholder=' Enter your name'
       // value={name}
       onChange={(e)=>setName(e.target.value)}
       />
       <br />
-      <input type="email"
-      placeholder='enter your email'
+      <input className='set-input-width p-2 mb-2' type="email"
+      placeholder='Enter your email'
       // value={email}
       onChange={(e)=>setEmail(e.target.value)}
        /> <br />
-      <input type="password"
-      placeholder='enter your password'
+      <input className='set-input-width p-2 mb-2' type="password"
+      placeholder='Enter your password'
       // value={password}
       onChange={(e)=>setPassword(e.target.value)}
        /> <br />
 
-       <button onClick={handleSignup}>Signup</button>
+       {/* <button className=' btn-color  text-light border-0 '>Signup</button> */}
+       <button type="button"  onClick={handleSignup} class="px-2 py-1 mb-2 set-input-width btn btn-primary">Signup</button>
     </div>
   )
 }

@@ -1,4 +1,23 @@
 .set-input-width{
-  max-width: 400px;
+  max-width: 450px;
   min-width: 250px;
+}
+.form-width{
+  max-width: 400px;
+  min-width: 300px;
+  height: 350px;
+
+}
+.btn-color{
+  background-color: rgb(51, 88, 250);
+}
+.g-icon-w{
+  width: 30px;
+  height: 30px;
+}
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

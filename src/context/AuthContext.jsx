@@ -42,6 +42,11 @@ export const AuthProvider=({children})=>{
         })
         return error
     }
+    const googleLogin=async()=>{
+        const error=await supabase.auth.signInWithOAuth({
+            provider:'google'
+        })
+    }
 
     const Logout=async()=>{
         await supabase.auth.signOut();
@@ -63,7 +68,7 @@ export const AuthProvider=({children})=>{
     }
   
     return (
-        <AuthContext.Provider value={{Logout,requireAuth,name,setName,email,setEmail,password,setPassword,signUp,login}}>
+        <AuthContext.Provider value={{googleLogin,Logout,requireAuth,name,setName,email,setEmail,password,setPassword,signUp,login}}>
             {children}
         </AuthContext.Provider>
     )

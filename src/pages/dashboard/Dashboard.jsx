@@ -3,11 +3,14 @@ import { useAuth } from '../../context/AuthContext'
 import { NavLink, redirect } from 'react-router'
 import Login from '../Login';
 import Dashboardpage from './Addproductpage';
+import DashSidebar from '../../components/DashSidebar';
+
 
 const Dashboard = () => {
   const {Logout}=useAuth();
   return (
     <div className='text-center'>
+      <DashSidebar />
       {/* Dashbboard */}
       {/* <Dashboardpage /> */}
       <NavLink to='/dashboard'>Home</NavLink> <br />
