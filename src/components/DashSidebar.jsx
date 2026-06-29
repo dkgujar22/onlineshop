@@ -7,10 +7,10 @@ const DashSidebar = () => {
     const {Logout,user}=useAuth();
   return (
     <div className="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{width: "280px;"}}>
-    <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <NavLink to="/dashboard" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       {/* <svg className="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg> */}
       <span className="fs-4">Dashboard</span>
-    </a>
+    </NavLink>
     <hr />
     <ul className="nav nav-pills flex-column mb-auto">
       <li className="nav-item">
@@ -28,7 +28,7 @@ const DashSidebar = () => {
         isActive ? "nav-link active " : "nav-link text-white"
         }>
           <svg className="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Add product
+          Add products
         </NavLink>
       </li>
       <li>
