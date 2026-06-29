@@ -33,6 +33,10 @@ const Showproduct = () => {
     const rowdata=data.filter((i)=>i.id===id)
     // console.log(rowdata);
     setProductName(rowdata[0].productname)
+    setCategory(rowdata[0].category)
+    setPrice(rowdata[0].price)
+    setStock(rowdata[0].stock)
+    setUrl(rowdata[0].url)
     setPid(id)
     navigate('/dashboard/addproduct')
     sethandleEdit(true);
@@ -63,14 +67,17 @@ const Showproduct = () => {
         
         {data.map((item)=>(
         <div key={item.id} className="col-12 col-12 col-sm-12 col-md-4 ">
-          <div className='border border-2 border-danger text-center'>
-            <img src={item.url} className='bd-placeholder-img rounded-circle img_width' alt="" />
-                  <h2>{item.productname}</h2>
-                  <span><p>{item.price}</p>|{item.stock>0? <p>Instock</p>:<p>out of stock</p>}</span>
+          <div className='card card-height shadow p-3 mb-5 bg-body rounded'>
+            <img src={item.url} className='card-img-top card-img-height' alt="" />
+            <div className='card-body'>
+               <h2 className='card-title'>{item.productname}</h2>
+                  <span><span>{item.price}|{item.stock>0?<span  className='p-2'>Instock</span>:<span>out of stock</span>}</span></span>
                   {/* <p><a class="btn btn-secondary" href="#">View details »</a></p> */}
-                  <button onClick={()=>handleDelete(item.id)} type="button" class="btn btn-warning mb-1"><FaTrash /></button>  <button onClick={()=>handleEdit(item.id)} type="button" class="btn btn-success mb-1"><FaEdit/></button>
-
-
+                  <br />
+                  <button onClick={()=>handleDelete(item.id)} type="button" class="btn btn-warning mb-1 me-1"><FaTrash /></button>
+                  <button onClick={()=>handleEdit(item.id)} type="button" class="btn btn-success mb-1"><FaEdit/></button>
+            </div>
+                 
           </div>        
         </div>
         ))}      

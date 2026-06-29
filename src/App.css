@@ -24,8 +24,11 @@
 .email-fontsize{
   font-size: 15px;
 }
-.img_width{
-  width: 150px;
-  height: 150px;
-
+.card-height{
+  height: 350px;
+}
+.card-img-height{
+  height: 200px;
+  background-position: center;
+  background-size: cover;
 }
