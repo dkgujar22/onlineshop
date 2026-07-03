@@ -8,7 +8,7 @@ const Showproduct = () => {
   const [data,setData]=useState([]);
   const [loading,setLoading]=useState(true);
   const navigate=useNavigate();
-  const {setPid,fetchData,deleteData,editData,productname,setProductName,price,setPrice,category,setCategory,stock,setStock,url,setUrl,sethandleEdit}=useCart();
+  const {setPid,fetchData,deleteData,editData,productname,setProductName,price,setPrice,category,setCategory,stock,setStock,sethandleEdit}=useCart();
   const handledata=async()=>{
     setLoading(true)
     const fetchdata=await fetchData();
@@ -26,6 +26,8 @@ const Showproduct = () => {
        const error=await deleteData(id);
        if(!error){
            setData((prev)=>prev.filter((i)=>i.id!==id))
+           console.log("delete");
+           
        }
        
    }
@@ -68,14 +70,14 @@ const Showproduct = () => {
         {data.map((item)=>(
         <div key={item.id} className="col-12 col-12 col-sm-12 col-md-4 ">
           <div className='card card-height shadow p-3 mb-5 bg-body rounded'>
-            <img src={item.url} className='card-img-top card-img-height' alt="" />
+            <img src={item.image_url} className='card-img-top card-img-height' alt="user" />
             <div className='card-body'>
                <h2 className='card-title'>{item.productname}</h2>
                   <span><span>{item.price}|{item.stock>0?<span  className='p-2'>Instock</span>:<span>out of stock</span>}</span></span>
                   {/* <p><a class="btn btn-secondary" href="#">View details »</a></p> */}
                   <br />
-                  <button onClick={()=>handleDelete(item.id)} type="button" class="btn btn-warning mb-1 me-1"><FaTrash /></button>
-                  <button onClick={()=>handleEdit(item.id)} type="button" class="btn btn-success mb-1"><FaEdit/></button>
+                  <button onClick={()=>handleDelete(item.id)} type="button" className="btn btn-warning mb-1 me-1"><FaTrash /></button>
+                  <button onClick={()=>handleEdit(item.id)} type="button" className="btn btn-success mb-1"><FaEdit/></button>
             </div>
                  
           </div>        

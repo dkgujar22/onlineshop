@@ -8,22 +8,47 @@ import { supabase } from "../supabaseClient";
     const [category,setCategory]=useState('');
     const [price,setPrice]=useState('');
     const [stock,setStock]=useState('');
-    const [url,setUrl]=useState('');
+    const [file,setFile]=useState(null);
+
     const [handleEdit,sethandleEdit]=useState(false)
     const [pId,setPid]=useState(0);
 
     // const [data,setData]=useState([]);
 
    const addData=async()=>{
-    const {error}=await supabase.from("admin_table").insert([{productname,category,price,stock,url}])
-    // if(error){
-    //   toast.error(error.message)
-    // }
-    // else{
-    //   toast.success("Data Added")
-    // }
-    return error
+
+    if(!file){
+      alert("please upload an image")
+      return
+    }
+    const fileName=`${Date.now()}-${file.name}`
+
+    const {error:uploadError}=await supabase.storage.from('productimages').upload(fileName,file);
+    if(uploadError){
+      alert(uploadError.message)
+      return
+    }
+
+    const {data:urlData}=await supabase.storage.from('productimages').getPublicUrl(fileName)
+    const imageUrl=urlData.publicUrl
+
+
+    const {error}=await supabase.from("admin_table").insert([{productname,category,price,stock,image_url:imageUrl}])
+    if(error){
+      alert(error.message)
+      return error
+    }
+    else{
+      setProductName('')
+      setCategory('')
+      setPrice('')
+      setStock('')
+      setFile(null)
+      
+    }
   }
+    
+  
   const fetchData=async()=>{
     const {data,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
     if(!error){
@@ -52,7 +77,7 @@ import { supabase } from "../supabaseClient";
   }
 
   return(
-    <CartContext.Provider value={{setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,url,setUrl,handleEdit,sethandleEdit}}>
+    <CartContext.Provider value={{setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,file,setFile,handleEdit,sethandleEdit}}>
         {children}
     </CartContext.Provider>
   )
