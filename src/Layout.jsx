@@ -11,6 +11,7 @@ import Dashboardhome from './pages/dashboard/Dashboardhome'
 import Dashboardroot from './pages/dashboard/Dashboardroot'
 import Addproductpage from './pages/dashboard/Addproductpage'
 import Showproduct from './pages/dashboard/Showproduct'
+import Cart from './pages/Cart'
 
 const Layout = () => {
     const {requireAuth}=useAuth();
@@ -21,6 +22,7 @@ const Layout = () => {
                 {index:true,element:<Home />},
                 {path:'login',element:<Login />},
                 {path:'signup',element:<Signup/>},
+                {path:'cart',element:<Cart/>},
                 {path:'dashboard',element:<Dashboardroot/>,loader:requireAuth,
                     children:[
                         {index:true,element:<Dashboardhome />},

@@ -9,9 +9,11 @@ import { supabase } from "../supabaseClient";
     const [price,setPrice]=useState('');
     const [stock,setStock]=useState('');
     const [file,setFile]=useState(null);
-
     const [handleEdit,sethandleEdit]=useState(false)
     const [pId,setPid]=useState(0);
+    const [data,setData]=useState([]);
+    const [cart,setCart]=useState([])
+    const [quantity,setQuantity]=useState(1);
 
     // const [data,setData]=useState([]);
 
@@ -52,12 +54,10 @@ import { supabase } from "../supabaseClient";
   const fetchData=async()=>{
     const {data,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
     if(!error){
-      // setData(data)
+      setData(data)
       console.log(data);
       return data
-      
-      // console.log(data);
-      
+      // console.log(data);    
     }
 
   }
@@ -65,19 +65,34 @@ import { supabase } from "../supabaseClient";
   const deleteData=async(id)=>{
     const {error}=await supabase.from('admin_table').delete().eq('id',id)
     return error
-
   }
-  const editData=async(id,productname,category,price,stock,url)=>{
-   const {error}=await supabase.from('admin_table').update({productname,category,price,stock,url}).eq('id',id)
-  //  console.log(productname);
+  const editData=async(id,productname,category,price,stock,image_url)=>{
+   const {data,error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',id)
+   console.log(data);
   //  return error
   // return productname
   // alert(productname)
   return error
   }
 
+  // handleCart
+  const handleStock=async()=>{
+
+    for(const cartItem of cart){
+      const product=data.find((p)=>p.id===cartItem.id)
+      console.log(product);
+      const {error}=await supabase.from('admin_table').update({
+        stock:parseInt(product.stock)-parseInt(cartItem.quantity)
+      }).eq("id", product.id);
+
+      // setData(data)
+    }
+    
+  }
+  // handleStock()
+
   return(
-    <CartContext.Provider value={{setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,file,setFile,handleEdit,sethandleEdit}}>
+    <CartContext.Provider value={{quantity,setQuantity,handleStock,cart,setCart,data,setData,setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,file,setFile,handleEdit,sethandleEdit}}>
         {children}
     </CartContext.Provider>
   )

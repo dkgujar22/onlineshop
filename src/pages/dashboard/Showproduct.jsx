@@ -5,10 +5,10 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 // import { FaTrash, FaTrashAlt } from 'react-icons/fa';
 
 const Showproduct = () => {
-  const [data,setData]=useState([]);
+  
   const [loading,setLoading]=useState(true);
   const navigate=useNavigate();
-  const {setPid,fetchData,deleteData,editData,productname,setProductName,price,setPrice,category,setCategory,stock,setStock,sethandleEdit}=useCart();
+  const {data,setData,file,setFile,setPid,fetchData,deleteData,editData,productname,setProductName,price,setPrice,category,setCategory,stock,setStock,sethandleEdit}=useCart();
   const handledata=async()=>{
     setLoading(true)
     const fetchdata=await fetchData();
@@ -33,12 +33,12 @@ const Showproduct = () => {
    }
   const handleEdit=async(id)=>{
     const rowdata=data.filter((i)=>i.id===id)
-    // console.log(rowdata);
+    console.log(rowdata);
     setProductName(rowdata[0].productname)
     setCategory(rowdata[0].category)
     setPrice(rowdata[0].price)
     setStock(rowdata[0].stock)
-    setUrl(rowdata[0].url)
+    // setFile(rowdata[0].image_url)
     setPid(id)
     navigate('/dashboard/addproduct')
     sethandleEdit(true);

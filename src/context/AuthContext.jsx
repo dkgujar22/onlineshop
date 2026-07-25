@@ -21,8 +21,9 @@ export const AuthProvider=({children})=>{
         
         supabase.auth.onAuthStateChange((_event,session)=>{
             setUser(session?.user||null)
+            console.log(session.user);
         })
-        console.log(user);
+        
         
     },[])
  const signUp=async()=>{
@@ -44,7 +45,10 @@ export const AuthProvider=({children})=>{
     }
     const googleLogin=async()=>{
         const error=await supabase.auth.signInWithOAuth({
-            provider:'google'
+            provider:'google',
+            options:{
+                redirectTo:"http://localhost:5174/dashboard"
+            }
         })
     }
 
@@ -53,17 +57,21 @@ export const AuthProvider=({children})=>{
     }
 
     const requireAuth= async({request})=>{
-        // const user=await getUser();
+        // const user=await getuser();
      const {
     data: { session },
   } = await supabase.auth.getSession();
 
         if(!session){
-          console.log("login");
+            console.log(user);
+            
+        //   console.log("login");
           const url=new URL(request.url)
           throw redirect(`/login?redirectTo=${url.pathname}`)
         }
         return session
+        console.log(session);
+        
 
     }
   

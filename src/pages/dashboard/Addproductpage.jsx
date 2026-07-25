@@ -29,7 +29,7 @@ const Addproductpage = () => {
 
   // }
   const handleUpdate=async()=>{
-     const error=await editData(pId,productname,category,price,stock,file);
+     const error=await editData(pId,productname,category,price,stock);
     if(error){
       alert(error.message)
     }else{
@@ -38,11 +38,11 @@ const Addproductpage = () => {
       setCategory('')
       setPrice('')
       setStock('')
-      setFile(null)
+      // setFile(null)
       sethandleEdit(false)
 
     }
-    console.log(pId,productname,category,price,stock,image_url);
+    console.log(pId,productname,category,price,stock);
     
        
   }

@@ -1,7 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { FaCartShopping } from "react-icons/fa6";
+import { NavLink, useNavigate } from "react-router";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
+  const navigate=useNavigate();
+  const {cart}=useCart();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-dark">
       <div className="container-fluid">
@@ -68,8 +72,13 @@ const Navbar = () => {
                 Dashboard
               </NavLink>
             </li>
+            <li className="nav-item ">
+              <NavLink onClick={()=>navigate('/cart')} className="nav-link text-light" to="/cart">
+                <FaCartShopping /> {cart?cart.length:""}
+              </NavLink>
+            </li>
           </ul>
-          <form className="d-flex">
+          {/* <form className="d-flex">
             <input
               className="form-control me-2"
               type="search"
@@ -79,7 +88,7 @@ const Navbar = () => {
             <button className="btn btn-outline-success" type="submit">
               Search
             </button>
-          </form>
+          </form> */}
         </div>
       </div>
     </nav>
