@@ -16,15 +16,86 @@ const Cart = () => {
     const handleDecrement=(id)=>{
       setCart(cart.map((c)=>c.id===id?{...c,quantity:c.quantity-1}:c));
     }
+    const removeCartitem=(id)=>{
+      setCart(cart.filter((i)=>i.id!==id));
+
+    }
   return (
     <div>
-        {cart.map((c)=>(
-            <div key={c.id}>
-                <p>{c.productname}</p>
-                <button onClick={()=>handleIncrement(c.id)}>+</button >{c.quantity}
-                <button onClick={()=>handleDecrement(c.id)}>-</button>
+      <div className="row">
+        <div className="col-12">
+          {cart.map((item)=>(
+            // <div key={c.id}>
+            //     <p>{c.productname}</p>
+            //     <button onClick={()=>handleIncrement(c.id)}>+</button >{c.quantity}
+            //     <button onClick={()=>handleDecrement(c.id)}>-</button>
+            // </div>
+            <div className="card mb-3 shadow-sm" key={item.id}>
+              <div className="card-body">
+                <div className="row align-items-center">
+
+                  {/* Product Image */}
+                  <div className="col-md-2" >
+                    <img
+                      src={item.image_url}
+                      alt={item.productname}
+                      className="img-fluid rounded"
+                      style={{width:"150px",height:"150px"}}
+                    />
+                  </div>
+
+                  {/* Product Name */}
+                  <div className="col-md-3">
+                    <h6 className="mb-1">{item.name}</h6>
+                    <small className="text-muted">
+                      {item.price}
+                    </small>
+                  </div>
+
+                  {/* Quantity */}
+                  <div className="col-md-3">
+                    <div className="input-group">
+                      <button onClick={()=>handleDecrement(item.id)} className="btn btn-outline-secondary">
+                        -
+                      </button>
+
+                      <input
+                        type="text"
+                        className="form-control text-center"
+                        value={item.quantity}
+                        readOnly
+                      />
+
+                      <button onClick={()=>handleIncrement(item.id)} className="btn btn-outline-secondary">
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Subtotal */}
+                  <div className="col-md-2 text-center">
+                    <strong>
+                      {(Number(item.price) * item.quantity).toFixed(2)}$
+                    </strong>
+                  </div>
+
+                  {/* Remove */}
+                  <div className="col-md-2 text-end">
+                    <button onClick={()=>removeCartitem(item.id)} className="btn btn-outline-danger btn-sm">
+                      Remove
+                    </button>
+                  </div>
+
+                </div>
+              </div>
             </div>
-        ))}
+          ))}
+        
+          
+        </div>
+      </div>
+
+        
        <button onClick={handleOrder}>order now</button>
        <button onClick={()=>console.log(cart)
        }>show cart</button>
