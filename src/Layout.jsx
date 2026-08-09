@@ -12,6 +12,7 @@ import Dashboardroot from './pages/dashboard/Dashboardroot'
 import Addproductpage from './pages/dashboard/Addproductpage'
 import Showproduct from './pages/dashboard/Showproduct'
 import Cart from './pages/Cart'
+import Orders from './pages/dashboard/Orders'
 
 const Layout = () => {
     const {requireAuth}=useAuth();
@@ -27,7 +28,8 @@ const Layout = () => {
                     children:[
                         {index:true,element:<Dashboardhome />},
                         {path:'addproduct',element:<Addproductpage />},
-                        {path:'showproducts',element:<Showproduct />}
+                        {path:'showproducts',element:<Showproduct />},
+                        {path:'orders',element:<Orders/>}
                     ]
                 }
 

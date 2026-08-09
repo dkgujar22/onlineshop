@@ -1,62 +1,102 @@
-import React, { useEffect } from 'react'
-import { Outlet } from 'react-router'
-import Navbar from '../components/Navbar'
-import { useCart } from '../context/CartContext'
-
+import React, { useEffect } from 'react';
+import { Outlet } from 'react-router';
+import Navbar from '../components/Navbar';
+import { useCart } from '../context/CartContext';
+import '../css/Home.css';
 
 const Home = () => {
-  const {data,setData,fetchData,cart,setCart,quantity}=useCart();
-  const handleData=async()=>{
-      const getdata=await fetchData();
-      // console.log(getdata);
-      setData(getdata)
-      
-    }
-  useEffect(()=>{   
-    handleData()
-  },[])
-  const handleCart=(id)=>{
-    const cartData=data.filter((item)=>item.id===id);
-    console.log(cartData);
-    setCart((prev)=>[...prev,{
-      ...cartData[0],quantity:quantity
-    }])
-    console.log(cart);
-    
-    
-    
-  }
-  return (
-    <div>
-      
-      <div className='text-center '>
-        <h1>welcome to my shop</h1>
-        <div className="row">
-          {data.map((item)=>(
-            <div key={item.id} className="col-12 col-sm-12 col-md-4">
-               <div className='container' key={item.id} >
-            <img src={item.image_url} alt="" style={{width:"250px",height:"300px"}} />
-            <h3>{item.productname}</h3>
-            <p>{item.category} </p>
-            <p>{item.price} | {item.stock}</p>
-            <button onClick={()=>handleCart(item.id)}>Add to cart</button>
-          </div>
+  const { data, setData, fetchData, setCart, quantity } = useCart();
 
+  useEffect(() => {
+    const handleData = async () => {
+      const getdata = await fetchData();
+      if (getdata) setData(getdata);
+    };
+    handleData();
+  }, []);
+
+  const handleCart = (id) => {
+    const itemToAdd = data.find((item) => item.id === id);
+    if (!itemToAdd) return;
+
+    setCart((prevCart) => {
+      // Check if item already exists in cart to prevent duplicates
+      const existingItem = prevCart.find((item) => item.id === id);
+      const addQty = quantity || 1;
+
+      if (existingItem) {
+        return prevCart.map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity + addQty }
+            : item
+        );
+      }
+      return [...prevCart, { ...itemToAdd, quantity: addQty }];
+    });
+  };
+
+  return (
+    <div className="home-container">
+      {/* Header / Hero Section */}
+      <header className="hero-banner">
+        <h1 className="hero-title">Welcome to My Shop</h1>
+        <p className="hero-subtitle">
+          Discover our curated collection of premium products
+        </p>
+      </header>
+
+      {/* Main Product Showcase */}
+      <main className="products-section">
+        <div className="products-grid">
+          {data && data.length > 0 ? (
+            data.map((item) => (
+              <div key={item.id} className="product-card">
+                <div className="card-image-container">
+                  <img
+                    src={item.image_url}
+                    alt={item.productname}
+                    className="product-image"
+                  />
+                  {item.category && (
+                    <span className="category-badge">{item.category}</span>
+                  )}
+                </div>
+
+                <div className="card-content">
+                  <h3 className="product-title">{item.productname}</h3>
+
+                  <div className="product-meta">
+                    <span className="product-price">${item.price}</span>
+                    <span
+                      className={`stock-status ${
+                        item.stock > 0 ? 'in-stock' : 'out-of-stock'
+                      }`}
+                    >
+                      {item.stock > 0 ? 'in stock' : 'Out of stock'}
+                    </span>
+                  </div>
+
+                  <button
+                    className="add-cart-btn"
+                    onClick={() => handleCart(item.id)}
+                    disabled={item.stock <= 0}
+                  >
+                    {item.stock > 0 ? 'Add to Cart' : 'Sold Out'}
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="loading-state">
+              <p>Loading products...</p>
             </div>
-         
-        ))}
-          
+          )}
         </div>
-        
+      </main>
 
       {/* <Outlet /> */}
-      </div>
-
-      <button onClick={()=>console.log(data)
-      }>show data</button>
-      
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

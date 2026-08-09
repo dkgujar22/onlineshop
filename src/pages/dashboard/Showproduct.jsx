@@ -73,7 +73,7 @@ const Showproduct = () => {
             <img src={item.image_url} className='card-img-top card-img-height' alt="user" />
             <div className='card-body'>
                <h2 className='card-title'>{item.productname}</h2>
-                  <span><span>{item.price}|{item.stock>0?<span  className='p-2'>Instock</span>:<span>out of stock</span>}</span></span>
+                  <span><span>{item.price}$ |{item.stock>0?<span  className='p-2'>Instock</span>:<span>out of stock</span>}</span></span>
                   {/* <p><a class="btn btn-secondary" href="#">View details »</a></p> */}
                   <br />
                   <button onClick={()=>handleDelete(item.id)} type="button" className="btn btn-warning mb-1 me-1"><FaTrash /></button>

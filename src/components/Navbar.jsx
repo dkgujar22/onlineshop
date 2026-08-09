@@ -1,94 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink } from "react-router";
 import { useCart } from "../context/CartContext";
+import "../css/Navbar.css";
 
 const Navbar = () => {
-  const navigate=useNavigate();
-  const {cart}=useCart();
+  const { cart } = useCart();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  // Calculate total item quantity in cart
+  const cartCount = cart
+    ? cart.reduce((total, item) => total + (item.quantity || 1), 0)
+    : 0;
+
+  const toggleMenu = () => {
+    setIsMobileOpen((prev) => !prev);
+  };
+
+  const closeMenu = () => {
+    setIsMobileOpen(false);
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-      <div className="container-fluid">
-        <NavLink className="navbar-brand text-light" to="/">
+    <nav className="navbar">
+      <div className="navbar-container">
+        {/* Brand Logo */}
+        <NavLink className="navbar-brand" to="/" onClick={closeMenu}>
           My Shop
         </NavLink>
+
+        {/* Mobile Hamburger Toggle Button */}
         <button
-          className="navbar-toggler text-light"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          className={`navbar-toggle ${isMobileOpen ? "open" : ""}`}
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink className="nav-link active text-light" aria-current="page" to="/">
+
+        {/* Navigation Links */}
+        <div className={`navbar-menu ${isMobileOpen ? "is-active" : ""}`}>
+          <ul className="navbar-links">
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "nav-item-link active" : "nav-item-link"
+                }
+                to="/"
+                onClick={closeMenu}
+              >
                 Home
               </NavLink>
             </li>
-            {/* <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li> */}
-            {/* <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "nav-item-link active" : "nav-item-link"
+                }
+                to="/dashboard"
+                onClick={closeMenu}
               >
-                Dropdown
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li> */}
-            <li className="nav-item ">
-              <NavLink className="nav-link text-light" to="/dashboard">
                 Dashboard
               </NavLink>
             </li>
-            <li className="nav-item ">
-              <NavLink onClick={()=>navigate('/cart')} className="nav-link text-light" to="/cart">
-                <FaCartShopping /> {cart?cart.length:""}
-              </NavLink>
-            </li>
           </ul>
-          {/* <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form> */}
+
+          {/* Cart Icon & Badge */}
+          <div className="navbar-cart-wrapper">
+            <NavLink className="cart-link" to="/cart" onClick={closeMenu}>
+              <FaCartShopping className="cart-icon" />
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            </NavLink>
+          </div>
         </div>
       </div>
     </nav>

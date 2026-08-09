@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import Checkout from './Checkout';
 
 const Cart = () => {
     const {cart,handleStock,setCart,setQuantity}=useCart();
     // const [qunatity,setQuantity]=useState(1);
     const handleOrder=async()=>{
-      await handleStock();
-      setCart([]);
-      alert("order delivered")
+      // await handleStock();
+      // setCart([]);
+      // alert("order delivered")
+
     }
 
     const handleIncrement=(id)=>{
@@ -48,7 +50,7 @@ const Cart = () => {
                   <div className="col-md-3">
                     <h6 className="mb-1">{item.name}</h6>
                     <small className="text-muted">
-                      {item.price}
+                      {item.price}$
                     </small>
                   </div>
 
@@ -96,7 +98,22 @@ const Cart = () => {
       </div>
 
         
-       <button onClick={handleOrder}>order now</button>
+       <button onClick={handleOrder} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">order now</button>
+       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <Checkout/>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
        <button onClick={()=>console.log(cart)
        }>show cart</button>
 
