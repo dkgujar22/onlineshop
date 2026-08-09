@@ -53,6 +53,17 @@ const DashSidebar = () => {
               <span>Show Products</span>
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/dashboard/orders"
+              className={({ isActive }) =>
+                isActive ? "sidebar-link active" : "sidebar-link"
+              }
+            >
+              <FiBox className="sidebar-icon" />
+              <span>Orders</span>
+            </NavLink>
+          </li>
         </ul>
       </nav>
 

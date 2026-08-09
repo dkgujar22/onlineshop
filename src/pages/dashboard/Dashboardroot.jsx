@@ -1,26 +1,24 @@
-import React from 'react'
-import Dashboard from './Dashboard'
-import { Outlet } from 'react-router'
-import DashSidebar from '../../components/DashSidebar'
+import React from 'react';
+import { Outlet } from 'react-router';
+import DashSidebar from '../../components/DashSidebar';
+import '../../css/DashboardRoot.css';
 
 const Dashboardroot = () => {
   return (
-    <div>
-      {/* <Dashboard />
-      <Outlet /> */}
-      <div className="container-fluid">
-      <div className="row">
-        <div className="col-lg-2 col-md-3 bg-dark min-vh-100 p-0">
-          <DashSidebar />
-        </div>
-        <div className="col-lg-10 col-md-9 p-4">
+    <div className="dashboard-root-layout">
+      {/* Fixed Sidebar Wrapper */}
+      <aside className="dashboard-sidebar-wrapper">
+        <DashSidebar />
+      </aside>
+
+      {/* Dynamic Route Content Area */}
+      <main className="dashboard-main-content">
+        <div className="dashboard-content-container">
           <Outlet />
         </div>
-
-      </div>
+      </main>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Dashboardroot
+export default Dashboardroot;
