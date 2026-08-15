@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useCart } from '../context/CartContext'
 import Checkout from './Checkout';
+import { HiH1 } from 'react-icons/hi2';
 
 const Cart = () => {
     const {cart,handleStock,setCart,setQuantity}=useCart();
     // const [qunatity,setQuantity]=useState(1);
     const handleOrder=async()=>{
       // await handleStock();
-      // setCart([]);
+      setCart([]);
       // alert("order delivered")
 
     }
@@ -24,14 +25,11 @@ const Cart = () => {
     }
   return (
     <div>
-      <div className="row">
+      {cart.length>0?
+      <>
+       <div className="row">
         <div className="col-12">
           {cart.map((item)=>(
-            // <div key={c.id}>
-            //     <p>{c.productname}</p>
-            //     <button onClick={()=>handleIncrement(c.id)}>+</button >{c.quantity}
-            //     <button onClick={()=>handleDecrement(c.id)}>-</button>
-            // </div>
             <div className="card mb-3 shadow-sm" key={item.id}>
               <div className="card-body">
                 <div className="row align-items-center">
@@ -114,8 +112,11 @@ const Cart = () => {
   </div>
 </div>
 
-       <button onClick={()=>console.log(cart)
-       }>show cart</button>
+       {/* <button onClick={()=>console.log(cart)
+       }>show cart</button> */}
+      </>
+     :<h1>empty cart</h1>}
+      
 
     </div>
   )
