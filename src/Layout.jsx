@@ -4,7 +4,7 @@ import Root from './pages/Root'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Dashboard from './pages/dashboard/Dashboard'
+// import Dashboard from './pages/dashboard/Dashboard'
 import { useAuth } from './context/AuthContext'
 import Productpage from './pages/dashboard/Showproduct'
 import Dashboardhome from './pages/dashboard/Dashboardhome'
@@ -13,6 +13,7 @@ import Addproductpage from './pages/dashboard/Addproductpage'
 import Showproduct from './pages/dashboard/Showproduct'
 import Cart from './pages/Cart'
 import Orders from './pages/dashboard/Orders'
+import Checkout from './pages/Checkout'
 
 const Layout = () => {
     const {requireAuth}=useAuth();
@@ -24,12 +25,14 @@ const Layout = () => {
                 {path:'login',element:<Login />},
                 {path:'signup',element:<Signup/>},
                 {path:'cart',element:<Cart/>},
+                {path:'checkout',element:<Checkout/>},
                 {path:'dashboard',element:<Dashboardroot/>,loader:requireAuth,
                     children:[
                         {index:true,element:<Dashboardhome />},
                         {path:'addproduct',element:<Addproductpage />},
                         {path:'showproducts',element:<Showproduct />},
-                        {path:'orders',element:<Orders/>}
+                        {path:'orders',element:<Orders/>},
+                        
                     ]
                 }
 

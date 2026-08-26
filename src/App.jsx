@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 import Protectedroute from './pages/Protectedroute'
 import Layout from './Layout'
 import { CartProvider } from './context/CartContext'
+import { OrderProvider } from './context/OrderContext'
 
 function App() {
   // const {requieAuth}=useAuth()
@@ -29,8 +30,12 @@ function App() {
     <>
     <AuthProvider>
       <CartProvider>
+        <OrderProvider>
+           <Layout/>
+
+        </OrderProvider>
       {/* <RouterProvider router={router} /> */}
-     <Layout/>
+    
      </CartProvider>
     </AuthProvider>
   

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useCart } from '../../context/CartContext'
 import { useNavigate } from 'react-router';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-// import { FaTrash, FaTrashAlt } from 'react-icons/fa';
+import '../../css/Showproduct.css'
 
 const Showproduct = () => {
   
@@ -52,39 +52,97 @@ const Showproduct = () => {
 
   
   return (
-    <div className='text-center'>
-      {/* <button onClick={handledata}>get data</button> */}
-      {/* <button onClick={fetchData}>fetchdata</button> */}
-      <h1>Products</h1>
-      {loading?<h1 className='mt-5'>loading...</h1>:
-      // data.map((item)=>(
-      //   <div key={item.id}>
-      //     <h1>{item.productname}</h1>
-      //     <button onClick={()=>deleteData(item.id)}>delete</button>
-      //     <button onClick={()=>handleEdit(item.id)}>edit</button>
-      //     {/* <button onClick={handleEdit}>move to add products</button> */}
-      //   </div>
-      // ))
-      <div className='row g-3 justify-content-center'>
-        
-        {data.map((item)=>(
-        <div key={item.id} className="col-12 col-12 col-sm-12 col-md-4 ">
-          <div className='card card-height shadow p-3 mb-5 bg-body rounded'>
-            <img src={item.image_url} className='card-img-top card-img-height' alt="user" />
-            <div className='card-body'>
-               <h2 className='card-title'>{item.productname}</h2>
-                  <span><span>{item.price}$ |{item.stock>0?<span  className='p-2'>Instock</span>:<span>out of stock</span>}</span></span>
-                  {/* <p><a class="btn btn-secondary" href="#">View details »</a></p> */}
-                  <br />
-                  <button onClick={()=>handleDelete(item.id)} type="button" className="btn btn-warning mb-1 me-1"><FaTrash /></button>
-                  <button onClick={()=>handleEdit(item.id)} type="button" className="btn btn-success mb-1"><FaEdit/></button>
-            </div>
-                 
-          </div>        
-        </div>
-        ))}      
-    </div>}
+   <div className="container py-4">
+  {/* Header */}
+  <div className="text-center mb-5">
+    <h1 className="fw-bold display-5">Products</h1>
+    <p className="text-muted">
+      Manage your products, stock, and inventory
+    </p>
+  </div>
+
+  {loading ? (
+    <div className="text-center py-5">
+      <div className="spinner-border text-primary" role="status"></div>
+      <p className="mt-3 text-muted">Loading products...</p>
     </div>
+  ) : (
+    <div className="row g-4">
+      {data.map((item) => (
+        <div
+          key={item.id}
+          className="col-12 col-sm-6 col-lg-4 col-xl-3"
+        >
+          <div className="card product-card h-100 border-0 shadow-sm">
+
+            {/* Product Image */}
+            <div className="product-image-wrapper">
+              <img
+                src={item.image_url}
+                className="card-img-top product-image"
+                alt={item.productname}
+              />
+            </div>
+
+            {/* Card Body */}
+            <div className="card-body d-flex flex-column">
+
+              <h5 className="card-title fw-bold mb-2">
+                {item.productname}
+              </h5>
+
+              <div className="d-flex justify-content-between align-items-center mb-3">
+
+                <span className="fw-bold fs-5 text-primary">
+                  ${item.price}
+                </span>
+
+                {item.stock > 0 ? (
+                  <span className="badge bg-success-subtle text-success px-3 py-2">
+                    In Stock
+                  </span>
+                ) : (
+                  <span className="badge bg-danger-subtle text-danger px-3 py-2">
+                    Out of Stock
+                  </span>
+                )}
+
+              </div>
+
+              <p className="text-muted small mb-3">
+                Stock: <strong>{item.stock}</strong> units
+              </p>
+
+              {/* Buttons */}
+              <div className="mt-auto d-flex gap-2">
+
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  type="button"
+                  className="btn btn-outline-danger flex-grow-1"
+                >
+                  <FaTrash className="me-1" />
+                  Delete
+                </button>
+
+                <button
+                  onClick={() => handleEdit(item.id)}
+                  type="button"
+                  className="btn btn-outline-success flex-grow-1"
+                >
+                  <FaEdit className="me-1" />
+                  Edit
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
     
   )
 }

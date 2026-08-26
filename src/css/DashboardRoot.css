@@ -1,52 +1,124 @@
-/* Master Dashboard Shell */
+/* Prevent horizontal scroll globally across the layout */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Master Layout Container */
 .dashboard-root-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #f8fafc;
   width: 100%;
+  max-width: 100vw;
+  background-color: #f8fafc;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-/* Sidebar Area Layout */
+/* Mobile Top Header Bar */
+.mobile-header {
+  display: none;
+}
+
+/* Fixed Desktop Sidebar Wrapper */
 .dashboard-sidebar-wrapper {
   position: sticky;
   top: 0;
   height: 100vh;
-  z-index: 100;
+  width: 260px;
   flex-shrink: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Main Viewport Outlet Container */
+/* Main Content Area */
 .dashboard-main-content {
   flex: 1;
+  min-width: 0; /* Ensures flex children break down instead of overflowing horizontally */
+  max-width: 100%;
   display: flex;
   flex-direction: column;
-  min-width: 0; /* Prevents flex items from overflowing horizontal boundaries */
   min-height: 100vh;
-  background-color: #f8fafc;
-  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .dashboard-content-container {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 100%;
+  padding: 1.5rem;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Responsive adjustments for mobile devices */
+/* -------------------------------------------
+   RESPONSIVE BREAKPOINTS (Mobile & Tablet)
+   ------------------------------------------- */
 @media (max-width: 768px) {
   .dashboard-root-layout {
     flex-direction: column;
   }
 
-  .dashboard-sidebar-wrapper {
-    position: relative;
-    height: auto;
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 60px;
+    padding: 0 1.25rem;
+    background-color: #0f172a;
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 900;
     width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mobile-toggle-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  .mobile-brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  /* Off-Canvas Drawer Sidebar for Mobile */
+  .dashboard-sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 270px;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .dashboard-sidebar-wrapper.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 999;
   }
 
   .dashboard-main-content {
     min-height: calc(100vh - 60px);
+  }
+
+  .dashboard-content-container {
+    padding: 1rem;
   }
 }

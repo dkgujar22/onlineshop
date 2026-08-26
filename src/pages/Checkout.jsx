@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { supabase } from '../supabaseClient';
 import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router';
+import { toast, ToastContainer } from 'react-toast';
 
 const Checkout = () => {
-    const {cart}=useCart();
+    const {cart,setCart}=useCart();
+    const navigate=useNavigate();
     const {
     register,
     handleSubmit,
@@ -14,6 +17,10 @@ const Checkout = () => {
     mode: 'onTouched',
   });
   const [modal,setModal]=useState(true)
+  useEffect(()=>{
+    console.log(cart);
+    
+  },[])
 
   const Totalamount=cart.reduce((sum,item)=>Number(item.price)*(item.quantity)+sum,0)
 
@@ -56,15 +63,28 @@ const Checkout = () => {
     //    console.log(orderdetail);
     // }
     setModal(false)
+    setCart([]);
+     toast.success("order book successfully");
+     navigate('/')
+     alert("order book successfully")
+
     
     reset();
   };
+  // const handleOrder=()=>{
+  //   // setCart([]);
+  //   toast.success("order book successfully")
+  //   alert("order book successfully")
+  // }
   return (
     <>
     {
         modal && 
+        <>
+        {cart.length>0?
         <div className="form-card">
       <h2 className="form-title">Contact & Address Info</h2>
+
 
       <form onSubmit={handleSubmit(onSubmit)} className="form-body" noValidate>
         {/* Name Field */}
@@ -175,8 +195,15 @@ const Checkout = () => {
           Save Address
         </button>
       </form>
-    </div>
+    </div>  :
+         <button onClick={()=>navigate('/')}>do shopping first</button>
+        
+      }
+        </>
+        
+        
 }
+ <ToastContainer/>
  
     </>
        

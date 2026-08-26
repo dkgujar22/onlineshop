@@ -3,31 +3,13 @@ import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext';
 
 const Addproductpage = () => {
-  // const [productname,setProductName]=useState('')
-  // const [category,setCategory]=useState('');
-  // const [price,setPrice]=useState('');
-  // const [stock,setStock]=useState(0);
-  // const [url,setUrl]=useState('');
+ 
 
 
   
   const {pId,editData,addData,productname,category,price,stock,file,setFile,setProductName,setCategory,setPrice,setStock,handleEdit,sethandleEdit}=useCart()
   
-  // const handleAddproduct=async()=>{
-  //     const error=await addData();
-  //     if(error){
-  //       alert(error.message)
-  //     }
-  //     else{
-  //     alert("Data Added successfully")
-  //     setProductName('')
-  //     setCategory('')
-  //     setPrice('')
-  //     setStock('')
-  //     setUrl('')
-  //     }
-
-  // }
+ 
   const handleUpdate=async()=>{
      const error=await editData(pId,productname,category,price,stock);
     if(error){

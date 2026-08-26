@@ -13,6 +13,7 @@ import { supabase } from "../supabaseClient";
     const [pId,setPid]=useState(0);
     const [data,setData]=useState([]);
     const [cart,setCart]=useState([])
+    const [custorderitem,setCustorderitem]=useState(null);
     const [quantity,setQuantity]=useState(1);
 
     // const [data,setData]=useState([]);
@@ -77,9 +78,14 @@ import { supabase } from "../supabaseClient";
 
   // handleCart
   const handleStock=async()=>{
+    console.log(custorderitem);
+     const {data:productslist,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
+    console.log(productslist);
+    
+    
 
-    for(const cartItem of cart){
-      const product=data.find((p)=>p.id===cartItem.id)
+    for(const cartItem of custorderitem){
+      const product=productslist.find((p)=>p.id===cartItem.product_id)
       console.log(product);
       const {error}=await supabase.from('admin_table').update({
         stock:parseInt(product.stock)-parseInt(cartItem.quantity)
@@ -92,7 +98,7 @@ import { supabase } from "../supabaseClient";
   // handleStock()
 
   return(
-    <CartContext.Provider value={{quantity,setQuantity,handleStock,cart,setCart,data,setData,setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,file,setFile,handleEdit,sethandleEdit}}>
+    <CartContext.Provider value={{custorderitem,setCustorderitem,quantity,setQuantity,handleStock,cart,setCart,data,setData,setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,file,setFile,handleEdit,sethandleEdit}}>
         {children}
     </CartContext.Provider>
   )

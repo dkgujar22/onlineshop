@@ -1,21 +1,31 @@
 
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../../supabaseClient';
-
+import '../../css/order.css'
+import { useCart } from '../../context/CartContext';
+import { useOrder } from '../../context/OrderContext';
 const Orders = () => {
 
-    const [orders,setOrders]=useState([]);
+    const {stock,handleStock,custorderitem,setCustorderitem}=useCart();
+    const {orders,setOrders,getOrders}=useOrder();
     const [orderItems,setOrderItems]=useState([])
     const [loading,setLoading]=useState(true);
     const [orderdetail,setOrderdetail]=useState(false);
-    const [custorderitem,setCustorderitem]=useState(null);
-    const getOrders=async()=>{
-        const {data:ordersdata}=await supabase.from('orders').select();
-        setOrders(ordersdata);
-        // console.log(ordersdata);     
+    const [filter,setFilter]=useState('all')
+    const [filterstatus,setFilterstatus]=useState('all');
+    const [alterstatusid,setAlterstatusId]=useState(0);
+    const [filterOrders,setFilterorder]=useState(null)
+    // const getOrders=async()=>{
+    //     const {data:ordersdata}=await supabase.from('orders').select();
+    //     setOrders(ordersdata);
+    //     console.log(ordersdata);     
 
-    }
+    // }
     // get specific customer ordered items to see it orders(id)===orderid(order_items)
+
+    const fetchOrders=async()=>{
+      await getOrders();
+    }
     const getOrderitems=async()=>{
         const {data:orderitems}=await supabase.from('order_items').select()
         setOrderItems(orderitems);
@@ -25,62 +35,157 @@ const Orders = () => {
 
     }
     useEffect(()=>{
-        getOrders();
+        // getOrders();
+        // fetchOrders();
+        console.log(orders);
         getOrderitems();
         setLoading(false)
         
 
-    },[2])
+    },[])
 
-    const getcustomeritems=(id)=>{
+    const handleGetItems=(id)=>{
         const items=orderItems.filter((orditem)=>orditem.order_id===id)
         console.log(items);
         setCustorderitem(items);
+        setAlterstatusId(id);   
 
-
-        
 
     }
+    const filterorders=orders?.filter((order)=>{
+        if(filterstatus==="delivered") return order.status==="delivered"
+        if(filterstatus==="pending") return order.status==="pending"
+        return order
+
+    });
+    const handleDispatch=async()=>{
+        await handleStock();
+        const {data:updatedOrder}=await supabase.from("orders").update({
+            status:"delivered"
+        }).eq('id',alterstatusid).select();
+        
+  
+        const updateorderData=orders.map((ord)=>(
+           ord.id===alterstatusid?{...ord,status:"delivered"}:ord
+        ))
+        setOrders(updateorderData)
+        alert("order delivered successfully")
+        
+        
+    }
   return (
-    <div>
-        {!loading?<>
-         <h1 className='text-center'>Total orders:{orders.length}</h1>
-
-        <div className="row">
-            <div className="col-12">
-                {orders.map((order)=>(
-                    <div key={order.id}>
-                        {order.full_name} |  {order.address} 
-                        <button onClick={()=>getcustomeritems(order.id)}>get item</button>
-                        { 
-                        orderdetail? 
-                        <>
-                        {
-                        custorderitem?.length>0 && custorderitem?.map((item)=>(
-                            <div key={item.id}>
-                                name:{item.product_name} |
-                                quantity:{item.quantity} | price:{item.price}
-
-
-                            </div>
-                        ))
-                        // <button onClick={()=>setOrderdetail(false)}>close</button>
-                    }
-                        </>:"no items"
-                         
-                        
- 
-                              
-                           }
-
-                    </div>
-                ))}
-            </div>
+   
+    <div className="orders-dashboard">
+      {/* Dashboard Header */}
+      <header className="dashboard-header">
+        <div>
+          <h1 className="dashboard-title">Orders Management</h1>
+          <p className="dashboard-subtitle">Track, review, and manage customer purchases</p>
         </div>
 
-        </>:<h1>loading</h1>}
-       
-      
+        <div>
+            filter
+            <select value={filterstatus} onChange={(e)=>setFilterstatus(e.target.value)}>
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="delivered">Delivered</option>
+            </select>
+        </div>
+        <div className="total-badge">
+          <span>Total Orders</span>
+          <strong>{orders?.length}</strong>
+        </div>
+      </header>
+
+      {/* Orders Grid */}
+      <div className="orders-grid">
+        {filterorders?.map((order) => (
+          <div key={order.id} className="order-card">
+            <div className="card-header">
+              <div className="order-id-group">
+                <span className="order-label">ORDER</span>
+                <span className="order-id">#{order.id ? order.id.slice(0, 8) : 'N/A'}</span>
+              </div>
+              <span className={`status-badge status-${order.status ? order.status.toLowerCase() : 'pending'}`}>
+                {order.status || 'Pending'}
+              </span>
+            </div>
+
+            <div className="card-body">
+              <div className="info-row">
+                <span className="info-label">Customer</span>
+                <span className="info-value font-highlight">{order.full_name}</span>
+              </div>
+
+              <div className="info-row">
+                <span className="info-label">Phone</span>
+                <span className="info-value">{order.phone}</span>
+              </div>
+
+              <div className="info-row">
+                <span className="info-label">Shipping</span>
+                <span className="info-value truncate-text">
+                  {order.address}, {order.city} ({order.postal_code})
+                </span>
+              </div>
+
+              <div className="info-row">
+                <span className="info-label">Placed On</span>
+                <span className="info-value text-muted">{order.created_at.split('T')[0]}</span>
+              </div>
+            </div>
+
+            <div className="card-footer">
+              <div className="total-price-group">
+                <span className="total-label">Total Amount</span>
+                <span className="total-amount">${Number(order.total_amount || 0).toFixed(2)}</span>
+              </div>
+
+              <button 
+                type="button" 
+                className="btn-get-items btn btn-primary" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                onClick={() => handleGetItems(order.id)}
+              >
+                Get Items
+              </button>
+
+              {/* <!-- Modal --> */}
+                    
+            </div>
+            
+          </div>
+        ))}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Order items</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           {
+                            custorderitem?.map((item)=>(
+                                <div key={item.id}>
+                                    <img src={item.product_image} alt="img" style={{width:"100px", height:"100px"}} />
+                                    <h5>{item.product_name}</h5> 
+                                    <p>{item.price} {item.quantity}</p>
+
+                                </div>
+                            ))
+                           }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button onClick={handleDispatch} type="button" class="btn btn-primary">
+                              dispatch</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+      </div>
+
+     
     </div>
   )
 }

@@ -400,3 +400,8 @@
 .modal-total {
   color: #16a34a;
 }
+@media (max-width: 767.98px) {
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+}
