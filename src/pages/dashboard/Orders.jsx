@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../../supabaseClient';
-import '../../css/order.css'
+import '../../css/Order.css'
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
 const Orders = () => {
@@ -37,7 +37,7 @@ const Orders = () => {
     useEffect(()=>{
         // getOrders();
         // fetchOrders();
-        console.log(orders);
+        // console.log(orders);
         getOrderitems();
         setLoading(false)
         
