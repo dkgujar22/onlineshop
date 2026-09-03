@@ -8,7 +8,7 @@ const Showproduct = () => {
   
   const [loading,setLoading]=useState(true);
   const navigate=useNavigate();
-  const {data,setData,file,setFile,setPid,fetchData,deleteData,editData,productname,setProductName,price,setPrice,category,setCategory,stock,setStock,sethandleEdit}=useCart();
+  const {data,setData,setProduct,setPid,fetchData,deleteData,sethandleEdit}=useCart();
   const handledata=async()=>{
     setLoading(true)
     const fetchdata=await fetchData();
@@ -26,28 +26,16 @@ const Showproduct = () => {
        const error=await deleteData(id);
        if(!error){
            setData((prev)=>prev.filter((i)=>i.id!==id))
-           console.log("delete");
            
        }
        
    }
-  const handleEdit=async(id)=>{
+  const handleEdit=(id)=>{
     const rowdata=data.filter((i)=>i.id===id)
-    console.log(rowdata);
-    setProductName(rowdata[0].productname)
-    setCategory(rowdata[0].category)
-    setPrice(rowdata[0].price)
-    setStock(rowdata[0].stock)
-    // setFile(rowdata[0].image_url)
+    setProduct(rowdata)
     setPid(id)
     navigate('/dashboard/addproduct')
     sethandleEdit(true);
-    
-    // setCategory(rowdata[])
-    // console.log(rowdata[0].productname);
-    // const error=await editData(id,productname,category,price,stock,url);
-    // console.log(pname);
-    
   }
 
   

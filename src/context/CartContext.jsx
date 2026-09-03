@@ -4,30 +4,35 @@ import { supabase } from "../supabaseClient";
  const CartContext=createContext();
 
  export const CartProvider=({children})=>{
-    const [productname,setProductName]=useState('')
-    const [category,setCategory]=useState('');
-    const [price,setPrice]=useState('');
-    const [stock,setStock]=useState('');
-    const [file,setFile]=useState(null);
+    // const [productname,setProductName]=useState('')
+    // const [category,setCategory]=useState('');
+    // const [price,setPrice]=useState('');
+    // const [stock,setStock]=useState('');
+    // const [file,setFile]=useState(null);
     const [handleEdit,sethandleEdit]=useState(false)
     const [pId,setPid]=useState(0);
     const [data,setData]=useState([]);
     const [cart,setCart]=useState([])
     const [custorderitem,setCustorderitem]=useState(null);
     const [quantity,setQuantity]=useState(1);
+    const [product,setProduct]=useState(null);
 
-    // const [data,setData]=useState([]);
+   const addData=async(productname,category,price,stock,file)=>{
 
-   const addData=async()=>{
-
-    if(!file){
-      alert("please upload an image")
-      return
-    }
+    // if(!file){
+    //   alert("please upload an image")
+    //   return
+    // }
+    // console.log(file);
+    
     const fileName=`${Date.now()}-${file.name}`
 
-    const {error:uploadError}=await supabase.storage.from('productimages').upload(fileName,file);
+    const {error:uploadError}=await supabase.storage.from('productimages').upload(fileName,file,{
+       contentType: file.type,
+       upsert: false,
+    });
     if(uploadError){
+      
       alert(uploadError.message)
       return
     }
@@ -41,14 +46,7 @@ import { supabase } from "../supabaseClient";
       alert(error.message)
       return error
     }
-    else{
-      setProductName('')
-      setCategory('')
-      setPrice('')
-      setStock('')
-      setFile(null)
-      
-    }
+
   }
     
   
@@ -56,9 +54,7 @@ import { supabase } from "../supabaseClient";
     const {data,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
     if(!error){
       setData(data)
-      console.log(data);
-      return data
-      // console.log(data);    
+      return data  
     }
 
   }
@@ -67,12 +63,9 @@ import { supabase } from "../supabaseClient";
     const {error}=await supabase.from('admin_table').delete().eq('id',id)
     return error
   }
-  const editData=async(id,productname,category,price,stock,image_url)=>{
-   const {data,error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',id)
+  const editData=async(productname,category,price,stock,image_url)=>{
+   const {data,error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',pId)
    console.log(data);
-  //  return error
-  // return productname
-  // alert(productname)
   return error
   }
 
@@ -91,14 +84,14 @@ import { supabase } from "../supabaseClient";
         stock:parseInt(product.stock)-parseInt(cartItem.quantity)
       }).eq("id", product.id);
 
-      // setData(data)
+      return error
     }
     
   }
   // handleStock()
 
   return(
-    <CartContext.Provider value={{custorderitem,setCustorderitem,quantity,setQuantity,handleStock,cart,setCart,data,setData,setPid,pId,fetchData,addData,editData,deleteData,productname,setProductName,category,setCategory,price,setPrice,stock,setStock,file,setFile,handleEdit,sethandleEdit}}>
+    <CartContext.Provider value={{custorderitem,setCustorderitem,quantity,setQuantity,handleStock,cart,setCart,data,setData,setPid,pId,fetchData,addData,editData,deleteData,handleEdit,sethandleEdit,product,setProduct}}>
         {children}
     </CartContext.Provider>
   )

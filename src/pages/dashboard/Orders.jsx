@@ -77,25 +77,44 @@ const Orders = () => {
    
     <div className="orders-dashboard">
       {/* Dashboard Header */}
-      <header className="dashboard-header">
-        <div>
-          <h1 className="dashboard-title">Orders Management</h1>
-          <p className="dashboard-subtitle">Track, review, and manage customer purchases</p>
-        </div>
+      <header className="dashboard-header d-flex justify-content-between align-items-center gap-3 flex-wrap mb-4">
 
-        <div>
-            filter
-            <select value={filterstatus} onChange={(e)=>setFilterstatus(e.target.value)}>
-                <option value="all">All</option>
-                <option value="pending">Pending</option>
-                <option value="delivered">Delivered</option>
-            </select>
-        </div>
-        <div className="total-badge">
-          <span>Total Orders</span>
-          <strong>{orders?.length}</strong>
-        </div>
-      </header>
+  {/* Title */}
+  <div>
+    <h1 className="dashboard-title mb-1">Orders Management</h1>
+    <p className="dashboard-subtitle mb-0">
+      Track, review, and manage customer purchases
+    </p>
+  </div>
+
+  {/* Right Side */}
+  <div className="d-flex align-items-center gap-3">
+
+    {/* Filter */}
+    <div>
+      <label className="form-label small fw-semibold mb-1">
+        Filter Status
+      </label>
+
+      <select
+        className="form-select form-select-sm"
+        value={filterstatus}
+        onChange={(e) => setFilterstatus(e.target.value)}
+      >
+        <option value="all">All Orders</option>
+        <option value="pending">Pending</option>
+        <option value="delivered">Delivered</option>
+      </select>
+    </div>
+
+    {/* Total Orders */}
+    <div className="total-badge text-center px-3 py-2">
+      <span className="d-block small">Total Orders</span>
+      <strong className="fs-5">{orders?.length || 0}</strong>
+    </div>
+
+  </div>
+</header>
 
       {/* Orders Grid */}
       <div className="orders-grid">
@@ -177,21 +196,48 @@ const Orders = () => {
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Order items</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                           {
-                            custorderitem?.map((item)=>(
-                                <div key={item.id}>
-                                    <img src={item.product_image} alt="img" style={{width:"100px", height:"100px"}} />
-                                    <h5>{item.product_name}</h5> 
-                                    <p>{item.price} {item.quantity}</p>
+                        <div className="modal-body bg-light">
+  {custorderitem?.map((item) => (
+    <div
+      key={item.id}
+      className="d-flex align-items-center bg-white border rounded-3 p-3 mb-3 shadow-sm"
+    >
+      {/* Product Image */}
+      <img
+        src={item.product_image}
+        alt={item.product_name}
+        className="rounded-3 border me-3"
+        style={{
+          width: "80px",
+          height: "80px",
+          objectFit: "cover",
+        }}
+      />
 
-                                </div>
-                            ))
-                           }
-                        </div>
+      {/* Product Info */}
+      <div className="flex-grow-1">
+        <h6 className="fw-semibold mb-1">
+          {item.product_name}
+        </h6>
+
+        <div className="text-muted small">
+          Quantity: <span className="fw-semibold">{item.quantity}</span>
+        </div>
+      </div>
+
+      {/* Price */}
+      <div className="text-end">
+        <span className="text-muted small d-block">Price</span>
+        <strong className="text-primary">
+          Rs. {item.price}
+        </strong>
+      </div>
+    </div>
+  ))}
+</div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onClick={handleDispatch} type="button" class="btn btn-primary">
+                            <button onClick={handleDispatch} type="button" class="btn btn-primary" data-bs-dismiss="modal">
                               dispatch</button>
                         </div>
                         </div>
