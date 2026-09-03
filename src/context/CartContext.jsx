@@ -65,21 +65,21 @@ import { supabase } from "../supabaseClient";
   }
   const editData=async(productname,category,price,stock,image_url)=>{
    const {data,error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',pId)
-   console.log(data);
+  //  console.log(data);
   return error
   }
 
   // handleCart
   const handleStock=async()=>{
-    console.log(custorderitem);
+    // console.log(custorderitem);
      const {data:productslist,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
-    console.log(productslist);
+    // console.log(productslist);
     
     
 
     for(const cartItem of custorderitem){
       const product=productslist.find((p)=>p.id===cartItem.product_id)
-      console.log(product);
+      // console.log(product);
       const {error}=await supabase.from('admin_table').update({
         stock:parseInt(product.stock)-parseInt(cartItem.quantity)
       }).eq("id", product.id);

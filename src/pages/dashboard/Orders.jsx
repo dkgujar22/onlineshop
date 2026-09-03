@@ -6,38 +6,28 @@ import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
 const Orders = () => {
 
-    const {stock,handleStock,custorderitem,setCustorderitem}=useCart();
+    const {handleStock,custorderitem,setCustorderitem}=useCart();
     const {orders,setOrders,getOrders}=useOrder();
     const [orderItems,setOrderItems]=useState([])
     const [loading,setLoading]=useState(true);
     const [orderdetail,setOrderdetail]=useState(false);
-    const [filter,setFilter]=useState('all')
     const [filterstatus,setFilterstatus]=useState('all');
-    const [alterstatusid,setAlterstatusId]=useState(0);
-    const [filterOrders,setFilterorder]=useState(null)
-    // const getOrders=async()=>{
-    //     const {data:ordersdata}=await supabase.from('orders').select();
-    //     setOrders(ordersdata);
-    //     console.log(ordersdata);     
+    const [alterstatusid,setAlterstatusId]=useState(null);
 
-    // }
+    
     // get specific customer ordered items to see it orders(id)===orderid(order_items)
 
     const fetchOrders=async()=>{
       await getOrders();
     }
     const getOrderitems=async()=>{
-        const {data:orderitems}=await supabase.from('order_items').select()
+        const {data:orderitems,error}=await supabase.from('order_items').select()
         setOrderItems(orderitems);
-        // console.log(orderitems);
         setOrderdetail(true)
         
 
     }
     useEffect(()=>{
-        // getOrders();
-        // fetchOrders();
-        // console.log(orders);
         getOrderitems();
         setLoading(false)
         
@@ -46,7 +36,6 @@ const Orders = () => {
 
     const handleGetItems=(id)=>{
         const items=orderItems.filter((orditem)=>orditem.order_id===id)
-        console.log(items);
         setCustorderitem(items);
         setAlterstatusId(id);   
 
@@ -229,7 +218,7 @@ const Orders = () => {
       <div className="text-end">
         <span className="text-muted small d-block">Price</span>
         <strong className="text-primary">
-          Rs. {item.price}
+          ${item.price}
         </strong>
       </div>
     </div>

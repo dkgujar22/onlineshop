@@ -8,8 +8,7 @@ export const OrderProvider=({children})=>{
     const getOrders=async()=>{
             const {data:ordersdata,error}=await supabase.from('orders').select('*');
             setOrders(ordersdata);
-            console.log(ordersdata);  
-            console.log(error);
+         
                
     
         }

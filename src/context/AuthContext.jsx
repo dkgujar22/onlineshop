@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
 
   const requireAuth = ({ request }) => {
     const savedUser = localStorage.getItem("adminUser");
-     console.log("requireAuth user:", user);
 
     if (!savedUser) {
       const url = new URL(request.url);

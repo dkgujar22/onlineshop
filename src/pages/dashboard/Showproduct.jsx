@@ -40,45 +40,69 @@ const Showproduct = () => {
 
   
   return (
-   <div className="container py-4">
+  <div className="container py-4">
+
   {/* Header */}
   <div className="text-center mb-5">
-    <h1 className="fw-bold display-5">Products</h1>
-    <p className="text-muted">
+    <h1 className="fw-bold display-5 mb-2">Products</h1>
+    <p className="text-muted mb-0">
       Manage your products, stock, and inventory
     </p>
   </div>
 
   {loading ? (
+
+    /* Loading */
     <div className="text-center py-5">
-      <div className="spinner-border text-primary" role="status"></div>
-      <p className="mt-3 text-muted">Loading products...</p>
+      <div
+        className="spinner-border text-primary"
+        role="status"
+      ></div>
+      <p className="mt-3 text-muted">
+        Loading products...
+      </p>
     </div>
+
   ) : (
+
+    /* Products */
     <div className="row g-4">
+
       {data.map((item) => (
+
         <div
           key={item.id}
           className="col-12 col-sm-6 col-lg-4 col-xl-3"
         >
-          <div className="card product-card h-100 border-0 shadow-sm">
+
+          <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
 
             {/* Product Image */}
-            <div className="product-image-wrapper">
+            <div
+              className="bg-light d-flex align-items-center justify-content-center"
+              style={{ height: "210px" }}
+            >
               <img
                 src={item.image_url}
-                className="card-img-top product-image"
                 alt={item.productname}
+                className="img-fluid"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "contain",
+                  padding: "15px",
+                }}
               />
             </div>
 
             {/* Card Body */}
-            <div className="card-body d-flex flex-column">
+            <div className="card-body d-flex flex-column p-3">
 
-              <h5 className="card-title fw-bold mb-2">
+              <h5 className="fw-bold mb-3 text-truncate">
                 {item.productname}
               </h5>
 
+              {/* Price + Status */}
               <div className="d-flex justify-content-between align-items-center mb-3">
 
                 <span className="fw-bold fs-5 text-primary">
@@ -86,19 +110,24 @@ const Showproduct = () => {
                 </span>
 
                 {item.stock > 0 ? (
-                  <span className="badge bg-success-subtle text-success px-3 py-2">
+                  <span className="badge bg-success-subtle text-success px-3 py-2 rounded-pill">
                     In Stock
                   </span>
                 ) : (
-                  <span className="badge bg-danger-subtle text-danger px-3 py-2">
+                  <span className="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">
                     Out of Stock
                   </span>
                 )}
 
               </div>
 
-              <p className="text-muted small mb-3">
-                Stock: <strong>{item.stock}</strong> units
+              {/* Stock */}
+              <p className="text-muted small mb-4">
+                Stock:{" "}
+                <strong className="text-dark">
+                  {item.stock}
+                </strong>{" "}
+                units
               </p>
 
               {/* Buttons */}
@@ -126,8 +155,10 @@ const Showproduct = () => {
 
             </div>
           </div>
+
         </div>
       ))}
+
     </div>
   )}
 </div>

@@ -12,6 +12,12 @@ const Dashboardhome = () => {
   const { orders } = useOrder();
   const [products, setProducts] = useState([]);
 
+  const uniqueCustomers = [
+  ...new Map(
+    orders?.map((order) => [order.user_id, order])
+  ).values()
+];
+
   const deliverOrders = orders?.filter(
     (ord) => ord.status === 'delivered'
   );
@@ -61,7 +67,7 @@ const Dashboardhome = () => {
     },
     {
       title: 'Total Customers',
-      value: '1,205',
+      value: uniqueCustomers.length,
       icon: <FiUsers size={22} />,
       bg: 'bg-info-subtle',
       text: 'text-info'
@@ -70,66 +76,60 @@ const Dashboardhome = () => {
 
  
   return (
-    <div className="container-fluid">
+    <div className="container-fluid px-4 py-4">
 
-      {/* Header */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+  {/* Header */}
+  <div className="mb-4">
+    <h1 className="fw-bold mb-1">
+      Welcome back, Admin
+    </h1>
 
-        <div className='ms-5'>
-          <h1 className="fw-bold mb-1 ">
-            Welcome back, Admin
-          </h1>
+    <p className="text-muted mb-0">
+      Here is what is happening with your store today.
+    </p>
+  </div>
 
-          <p className="text-muted mb-0">
-            Here is what is happening with your store today.
-          </p>
-        </div>
+  {/* Stats */}
+  <div className="row g-4">
 
-        
+    {stats.map((stat, index) => (
+      <div
+        key={index}
+        className="col-12 col-sm-6 col-xl-3"
+      >
+        <div className="card border-0 shadow-sm rounded-4 h-100">
+          <div className="card-body p-4">
 
-      </div>
+            <div className="d-flex justify-content-between align-items-center">
 
-      {/* Stats */}
-      <div className="row g-4 mb-4">
+              {/* Text */}
+              <div>
+                <p className="text-muted mb-2 small fw-semibold">
+                  {stat.title}
+                </p>
 
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className="col-12 col-sm-6 col-xl-3"
-          >
-            <div className="card border-0 shadow-sm h-100">
-              <div className="card-body">
-
-                <div className="d-flex justify-content-between align-items-start">
-
-                  <div>
-                    <p className="text-muted mb-2">
-                      {stat.title}
-                    </p>
-
-                    <h3 className="fw-bold mb-0">
-                      {stat.value}
-                    </h3>
-                  </div>
-
-                  <div
-                    className={`${stat.bg} ${stat.text} rounded-3 p-3`}
-                  >
-                    {stat.icon}
-                  </div>
-
-                </div>
-
+                <h3 className="fw-bold mb-0">
+                  {stat.value}
+                </h3>
               </div>
+
+              {/* Icon */}
+              <div
+                className={`${stat.bg} ${stat.text} rounded-4 p-3 d-flex align-items-center justify-content-center`}
+              >
+                {stat.icon}
+              </div>
+
             </div>
+
           </div>
-        ))}
-
+        </div>
       </div>
+    ))}
 
-      
-     
-    </div>
+  </div>
+
+</div>
   );
 };
 
