@@ -17,77 +17,64 @@ const Dashboardroot = () => {
 
   return (
     <div className="min-vh-100 bg-light">
+      {/* Hamburger Button - only visible when sidebar is closed, mobile only */}
+      {!isSidebarOpen && (
+        <button
+          className="btn btn-outline-primary d-md-none position-fixed"
+          style={{ top: '12px', left: '12px', zIndex: 1060 }}
+          onClick={toggleSidebar}
+        >
+          <FiMenu size={22} />
+        </button>
+      )}
 
-      {/* Mobile Navbar */}
-      <nav className="navbar navbar-light bg-white border-bottom shadow-sm d-md-none">
-        <div className="container-fluid">
-
-          <button
-            className="btn btn-outline-primary"
-            onClick={toggleSidebar}
-          >
-            {isSidebarOpen ? <FiX size={22} /> : <FiMenu size={22} />}
-          </button>
-
-          <span className="navbar-brand fw-bold text-primary mb-0">
-            Admin Dashboard
-          </span>
-
-        </div>
-      </nav>
-
-
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - light dim, click outside to close */}
       {isSidebarOpen && (
         <div
-          className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-md-none"
-          style={{ zIndex: 1040 }}
+          className="position-fixed top-0 start-0 w-100 h-100 d-md-none"
+          style={{ zIndex: 1040, backgroundColor: 'rgba(0,0,0,0.15)' }}
           onClick={closeSidebar}
         ></div>
       )}
 
-
       {/* Desktop Sidebar */}
       <div
         className="d-none d-md-block position-fixed top-0 start-0"
-        style={{
-          width: '260px',
-          height: '100vh',
-          zIndex: 1030
-        }}
+        style={{ width: '260px', height: '100vh' }}
       >
         <DashSidebar closeMobileMenu={closeSidebar} />
       </div>
 
-
       {/* Mobile Sidebar */}
-      {isSidebarOpen && (
-        <div
-          className="d-md-none position-fixed start-0 bg-white shadow"
-          style={{
-            top: '57px',
-            width: '260px',
-            height: 'calc(100vh - 57px)',
-            zIndex: 1050
-          }}
+      <div
+        className="d-md-none position-fixed top-0 start-0 bg-white shadow"
+        style={{
+          width: '260px',
+          height: '100vh',
+          zIndex: 1050,
+          transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.3s ease-in-out',
+          overflowY: 'auto'
+        }}
+      >
+        {/* Close Button - inside the sidebar's own top-right corner */}
+        <button
+          className="btn btn-sm btn-light position-absolute"
+          style={{ top: '12px', right: '12px', zIndex: 1055 }}
+          onClick={closeSidebar}
         >
-          <DashSidebar closeMobileMenu={closeSidebar} />
-        </div>
-      )}
+          <FiX size={20} />
+        </button>
 
+        <DashSidebar closeMobileMenu={closeSidebar} />
+      </div>
 
       {/* Main Content */}
-      <main
-         className="dashboard-main min-vh-100"
-  style={{
-    marginLeft: '260px'
-  }}
-      >
+      <main className="dashboard-main min-vh-100 ">
         <div className="container-fluid p-3 p-md-4">
           <Outlet />
         </div>
       </main>
-
     </div>
   );
 };

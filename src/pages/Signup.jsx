@@ -7,10 +7,10 @@ const Signup = () => {
   const handleSignup=async()=>{
     const error=await signUp();
     if(error){
-      console.log(error.message);
+      // console.log(error.message);
       alert(error.message)
-      console.log("Email:", `"${email}"`);
-      console.log("Type:", typeof email);
+      // console.log("Email:", `"${email}"`);
+      // console.log("Type:", typeof email);
     }
     else{
       alert("Account created successfully")

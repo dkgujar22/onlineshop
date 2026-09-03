@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router';
 import {
   FiDollarSign,
   FiShoppingBag,
   FiBox,
   FiUsers,
-  FiPlus,
-  FiArrowRight
 } from 'react-icons/fi';
 import { useOrder } from '../../context/OrderContext';
 import { supabase } from '../../supabaseClient';
@@ -71,42 +68,16 @@ const Dashboardhome = () => {
     }
   ];
 
-  const recentActivities = [
-    {
-      id: 1,
-      text: 'New order #ORD-9021 received',
-      time: '10 minutes ago',
-      type: 'order'
-    },
-    {
-      id: 2,
-      text: 'Product "Mechanical Keyboard" stock updated',
-      time: '1 hour ago',
-      type: 'product'
-    },
-    {
-      id: 3,
-      text: 'New customer account created',
-      time: '3 hours ago',
-      type: 'user'
-    },
-    {
-      id: 4,
-      text: 'Order #ORD-9018 shipped successfully',
-      time: '5 hours ago',
-      type: 'order'
-    }
-  ];
-
+ 
   return (
     <div className="container-fluid">
 
       {/* Header */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
 
-        <div>
-          <h1 className="fw-bold mb-1">
-            Welcome back, Admin 👋
+        <div className='ms-5'>
+          <h1 className="fw-bold mb-1 ">
+            Welcome back, Admin
           </h1>
 
           <p className="text-muted mb-0">
@@ -114,13 +85,7 @@ const Dashboardhome = () => {
           </p>
         </div>
 
-        <Link
-          to="/dashboard/addproduct"
-          className="btn btn-primary mt-3 mt-md-0 d-flex align-items-center gap-2"
-        >
-          <FiPlus />
-          Add New Product
-        </Link>
+        
 
       </div>
 
@@ -162,166 +127,8 @@ const Dashboardhome = () => {
 
       </div>
 
-      {/* Main Content */}
-      <div className="row g-4">
-
-        {/* Quick Actions */}
-        <div className="col-12 col-lg-6">
-
-          <div className="card border-0 shadow-sm h-100">
-
-            <div className="card-header bg-white border-0 pt-4 px-4">
-              <h5 className="fw-bold mb-0">
-                Quick Actions
-              </h5>
-            </div>
-
-            <div className="card-body px-4">
-
-              {/* Add Product */}
-              <Link
-                to="/dashboard/addproduct"
-                className="text-decoration-none text-dark"
-              >
-                <div className="d-flex justify-content-between align-items-center border-bottom py-3">
-
-                  <div className="d-flex align-items-center gap-3">
-
-                    <div className="bg-primary-subtle text-primary rounded-3 p-2">
-                      <FiPlus size={20} />
-                    </div>
-
-                    <div>
-                      <strong className="d-block">
-                        Add New Product
-                      </strong>
-
-                      <small className="text-muted">
-                        Upload new inventory items to your catalog
-                      </small>
-                    </div>
-
-                  </div>
-
-                  <FiArrowRight className="text-muted" />
-
-                </div>
-              </Link>
-
-              {/* Manage Products */}
-              <Link
-                to="/dashboard/showproducts"
-                className="text-decoration-none text-dark"
-              >
-                <div className="d-flex justify-content-between align-items-center border-bottom py-3">
-
-                  <div className="d-flex align-items-center gap-3">
-
-                    <div className="bg-warning-subtle text-warning rounded-3 p-2">
-                      <FiBox size={20} />
-                    </div>
-
-                    <div>
-                      <strong className="d-block">
-                        Manage Products
-                      </strong>
-
-                      <small className="text-muted">
-                        Edit prices, update stock, or remove items
-                      </small>
-                    </div>
-
-                  </div>
-
-                  <FiArrowRight className="text-muted" />
-
-                </div>
-              </Link>
-
-              {/* Orders */}
-              <Link
-                to="/dashboard/orders"
-                className="text-decoration-none text-dark"
-              >
-                <div className="d-flex justify-content-between align-items-center py-3">
-
-                  <div className="d-flex align-items-center gap-3">
-
-                    <div className="bg-success-subtle text-success rounded-3 p-2">
-                      <FiShoppingBag size={20} />
-                    </div>
-
-                    <div>
-                      <strong className="d-block">
-                        View Orders
-                      </strong>
-
-                      <small className="text-muted">
-                        Check customer orders and shipping statuses
-                      </small>
-                    </div>
-
-                  </div>
-
-                  <FiArrowRight className="text-muted" />
-
-                </div>
-              </Link>
-
-            </div>
-          </div>
-
-        </div>
-
-        {/* Recent Activity */}
-        <div className="col-12 col-lg-6">
-
-          <div className="card border-0 shadow-sm h-100">
-
-            <div className="card-header bg-white border-0 pt-4 px-4">
-              <h5 className="fw-bold mb-0">
-                Recent Store Activity
-              </h5>
-            </div>
-
-            <div className="card-body px-4">
-
-              {recentActivities.map((activity) => (
-                <div
-                  key={activity.id}
-                  className="d-flex gap-3 py-3 border-bottom"
-                >
-
-                  <div
-                    className={`rounded-circle bg-primary`}
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      marginTop: '7px',
-                      flexShrink: 0
-                    }}
-                  ></div>
-
-                  <div>
-                    <p className="mb-1 fw-semibold">
-                      {activity.text}
-                    </p>
-
-                    <small className="text-muted">
-                      {activity.time}
-                    </small>
-                  </div>
-
-                </div>
-              ))}
-
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
+      
+     
     </div>
   );
 };

@@ -14,9 +14,13 @@ import Showproduct from './pages/dashboard/Showproduct'
 import Cart from './pages/Cart'
 import Orders from './pages/dashboard/Orders'
 import Checkout from './pages/Checkout'
+import UserLogin from './pages/UserLogin'
+import { useCust } from './context/CustomerAuthContext'
+import Register from './pages/Register'
 
 const Layout = () => {
     const {requireAuth}=useAuth();
+    const {requiresecondAuth}=useCust();
     const router=createBrowserRouter([
         {
             path:'/',element:<Root />,
@@ -25,8 +29,15 @@ const Layout = () => {
                 {path:'login',element:<Login />},
                 {path:'signup',element:<Signup/>},
                 {path:'cart',element:<Cart/>},
-                {path:'checkout',element:<Checkout/>},
-                {path:'dashboard',element:<Dashboardroot/>,loader:requireAuth,
+                {path:'checkout',element:<Checkout/>,loader:requiresecondAuth},
+                {path:'signin',element:<UserLogin/>},
+                {path:'createaccount',element:<Register/>}
+            ]
+              
+          
+            },
+
+                {path:'/dashboard',element:<Dashboardroot/>,loader:requireAuth,
                     children:[
                         {index:true,element:<Dashboardhome />},
                         {path:'addproduct',element:<Addproductpage />},
@@ -36,8 +47,8 @@ const Layout = () => {
                     ]
                 }
 
-            ]
-        }
+            
+        
     ])
 
   return (

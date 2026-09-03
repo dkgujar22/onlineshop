@@ -1,19 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../components/Navbar';
 import { useCart } from '../context/CartContext';
 import '../css/Home.css';
+import '../css/Header.css'
 
 const Home = () => {
   const { data, setData, fetchData, setCart, quantity } = useCart();
+  const [search,setSearch]=useState('');
+  const [category,setCategory]=useState('all');
 
   useEffect(() => {
     const handleData = async () => {
       const getdata = await fetchData();
+       console.log(getdata);
       if (getdata) setData(getdata);
     };
     handleData();
+   
+    
+    
   }, []);
+  const uniqueCategories = [
+  ...new Set(
+    data.map((product) => product.category?.trim().toLowerCase())
+  ),
+];
+
+const filteredProducts=data.filter((p)=>{
+    
+  const matchesSearch =
+    p.category?.toLowerCase().includes(search.toLowerCase()) ||
+    p.productname?.toLowerCase().includes(search.toLowerCase());
+
+  const matchesCategory =
+    category === "all" || p.category === category;
+
+  return matchesSearch && matchesCategory;
+     
+
+ 
+
+                  
+})
 
   const handleCart = (id) => {
     const itemToAdd = data.find((item) => item.id === id);
@@ -38,18 +67,68 @@ const Home = () => {
   return (
     <div className="home-container">
       {/* Header / Hero Section */}
-      <header className="hero-banner">
-        <h1 className="hero-title">Welcome to My Shop</h1>
-        <p className="hero-subtitle">
-          Discover our curated collection of premium products
+    
+<header className="bg-light py-4 border-bottom">
+  <div className="container">
+
+    <div className="row align-items-center g-3">
+
+      {/* Heading */}
+      <div className="col-12 col-md-4">
+        <h2 className="mb-1 fw-bold">Our Products</h2>
+        <p className="text-muted mb-0">
+          Find your favorite products
         </p>
-      </header>
+      </div>
+
+      {/* Search */}
+      <div className="col-12 col-md-5">
+        <div className="input-group">
+          <span className="input-group-text bg-white">
+            🔍
+          </span>
+
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Category */}
+      <div className="col-12 col-md-3">
+        <select
+          className="form-select"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="all">All Categories</option>
+
+          {uniqueCategories.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+
+
+
 
       {/* Main Product Showcase */}
       <main className="products-section">
         <div className="products-grid">
-          {data && data.length > 0 ? (
-            data.map((item) => (
+          {filteredProducts && filteredProducts.length > 0 ? (
+            filteredProducts.map((item) => (
               <div key={item.id} className="product-card">
                 <div className="card-image-container">
                   <img

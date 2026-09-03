@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useCart } from "../context/CartContext";
 import "../css/Navbar.css";
+import { useAuth } from "../context/AuthContext";
+import { useCust } from "../context/CustomerAuthContext";
+import { supabase } from "../supabaseClient";
 
 const Navbar = () => {
   const { cart } = useCart();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const {cust,logout}=useCust();
+  const navigate=useNavigate();
+
+ 
 
   // Calculate total item quantity in cart
   const cartCount = cart
@@ -74,6 +81,18 @@ const Navbar = () => {
               {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </NavLink>
           </div>
+          {
+            cust? <button className="btn btn-danger" onClick={logout}>Logout</button>:
+            <> 
+              <span>
+                <button className="btn btn-primary" onClick={()=>navigate('/signin')}>Login</button>
+                user:
+              </span>
+            </>
+            
+            
+          }
+         
         </div>
       </div>
     </nav>

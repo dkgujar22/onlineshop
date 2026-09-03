@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import {
   FiHome,
   FiPlusSquare,
@@ -11,7 +11,8 @@ import {
 import { useAuth } from '../context/AuthContext';
 
 const DashSidebar = ({ closeMobileMenu }) => {
-  const { Logout, user } = useAuth();
+  const { Logout, user,} = useAuth();
+
 
   const linkClass = ({ isActive }) =>
     `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded ${

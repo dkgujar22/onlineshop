@@ -4,16 +4,11 @@ import Checkout from './Checkout';
 import { HiH1 } from 'react-icons/hi2';
 import { useNavigate } from 'react-router';
 
+
 const Cart = () => {
     const {cart,handleStock,setCart,setQuantity}=useCart();
-    // const [qunatity,setQuantity]=useState(1);
     const navigate=useNavigate();
-    const handleOrder=async()=>{
-      // await handleStock();
-      // setCart([]);
-      // alert("order delivered")
-
-    }
+        
 
     const handleIncrement=(id)=>{
       setCart(cart.map((c)=>c.id===id?{...c,quantity:c.quantity+1}:c));
@@ -102,23 +97,6 @@ const Cart = () => {
        type="button" class="btn btn-primary" >
         order now
         </button>
-       {/* <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <Checkout/>
-      </div>
-      
-    </div>
-  </div>
-</div> */}
-
-       {/* <button onClick={()=>console.log(cart)
-       }>show cart</button> */}
       </>
      :<>
      <h1>empty cart</h1>

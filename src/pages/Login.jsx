@@ -1,46 +1,112 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { NavLink, replace, useNavigate, useSearchParams } from 'react-router';
-import googleIcon from '../assets/icons/google-icon.png'
+import { useNavigate, useSearchParams } from 'react-router';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
-    const {email,setEmail,password,setPassword,login,googleLogin}=useAuth();
+    const {Login}=useAuth();
     const [params]=useSearchParams();
     const navigate=useNavigate();
+    const [islogin,setIslogin]=useState(false);
+          const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset
+      } = useForm();
 
     const redirectTo=params.get('redirectTo') || '/dashboard'
 
-    const handleLogin=async()=>{
-        const error=await login();
-        if(error) alert (error.message)
-        else{
-          alert("login successfully")  
-          setEmail('')
-          setPassword('') 
-          navigate(redirectTo,{replace:true});
-        }
-
+    const onSubmit=(data)=>{
+       setIslogin(true)
+      
+      const error=Login(data.email,data.password);
+      if(error){
+        alert(error)
+      }
+      else{
+        // alert("login successfully")
+        console.log("Navigating...");
+        setTimeout(() => {
+           navigate(redirectTo,{replace:true})
+        setIslogin(false)
+        reset()
+        }, 2000);
+       
+      }    
+        
+    
     }
-   
+       
+       
   return (
-    <div className='shadow p-3 mb-5 bg-body rounded text-center d-block mx-auto p-2 mt-5 form-width'>
-      <h1 className='mb-3 mt-3'>Login</h1>
-      <input className='set-input-width p-2 mb-2' type="email"
-      value={email}
-      placeholder='Enter your email'
-      onChange={(e)=>setEmail(e.target.value)}
+     <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-5">
+          <div className="card p-4 shadow">
+            <h2 className="text-center mb-4">Login</h2>
 
-       /> <br />
-      <input className='set-input-width p-2 mb-2' type="password"
-      placeholder='Enter your password'
-      value={password}
-      onChange={(e)=>setPassword(e.target.value)}
-       /> <br />
-       {/* <button className='px-2 py-1 mb-2 btn-color set-input-width text-light border-0 ' onClick={handleLogin}>Login</button> <br /> */}
-       <button type="button"  onClick={handleLogin} class="px-2 py-1 mb-2 set-input-width btn btn-primary">Login</button><br />
-       <span className='mt-2 p-2'>Don't Have an account? <NavLink to="/signup" onClick={()=>navigate('/signup')}>signup</NavLink></span>  <br />
-       <button className='px-2 py-1 mb-2 bg-transparent mt-1 set-input-width' onClick={googleLogin}><img className='g-icon-w me-2' src={googleIcon} alt="icon" />Continue with Google</button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              
+              {/* Email */}
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email",
+                    },
+                  })}
+                />
+
+                {errors.email && (
+                  <small className="text-danger">
+                    {errors.email.message}
+                  </small>
+                )}
+              </div>
+
+              {/* Password */}
+              <div className="mb-3">
+                <label className="form-label">Password</label>
+
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
+                />
+
+                {errors.password && (
+                  <small className="text-danger">
+                    {errors.password.message}
+                  </small>
+                )}
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100">
+                {islogin?"signing in ...":"Login"}
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+   
+   
   )
 }
 

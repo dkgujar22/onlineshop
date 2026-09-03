@@ -405,3 +405,13 @@
     margin-left: 0 !important;
   }
 }
+.dashboard-main {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .dashboard-main {
+    margin-left: 260px;
+  }
+}
+

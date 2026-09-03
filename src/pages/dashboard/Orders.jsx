@@ -141,14 +141,28 @@ const Orders = () => {
                 <span className="total-amount">${Number(order.total_amount || 0).toFixed(2)}</span>
               </div>
 
+              {order.status==="delivered"?
               <button 
                 type="button" 
                 className="btn-get-items btn btn-primary" 
                 data-bs-toggle="modal" data-bs-target="#exampleModal"
                 onClick={() => handleGetItems(order.id)}
+                disabled
+                
               >
                 Get Items
-              </button>
+              </button>:
+               <button 
+                type="button" 
+                className="btn-get-items btn btn-primary" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                onClick={() => handleGetItems(order.id)}
+                
+              >
+                Get Items
+              </button>}
+
+             
 
               {/* <!-- Modal --> */}
                     

@@ -33,13 +33,17 @@ const Checkout = () => {
         full_name:data.name,
         phone:data.phone,
         address:data.address,
-        city:data.city,
+        country:data.country,
         postal_code:data.postalCode,
         total_amount:Totalamount,
         status: "pending"
     }]).select().single()
     if(orderdetailError){
         console.log(orderdetailError.message);
+    }
+    else{
+      console.log(orderdetail);
+      
     }
 
     const orderitems=cart.map((item)=>({
@@ -57,8 +61,9 @@ const Checkout = () => {
         
     }else{
         console.log(custorderitems);
-        
     }
+        
+    // }
     // else{
     //    console.log(orderdetail);
     // }
@@ -66,7 +71,7 @@ const Checkout = () => {
     setCart([]);
      toast.success("order book successfully");
      navigate('/')
-     alert("order book successfully")
+
 
     
     reset();
@@ -151,18 +156,18 @@ const Checkout = () => {
         <div className="form-row">
           {/* City */}
           <div className="form-group">
-            <label htmlFor="city" className="form-label">
-              City
+            <label htmlFor="country" className="form-label">
+              Country
             </label>
             <input
-              id="city"
+              id="country"
               type="text"
               placeholder="San Francisco"
-              {...register('city', { required: 'City is required' })}
+              {...register('country', { required: 'Country is required' })}
               className={`form-input ${errors.city ? 'input-error' : ''}`}
             />
-            {errors.city && (
-              <span className="error-message">{errors.city.message}</span>
+            {errors.country && (
+              <span className="error-message">{errors.country.message}</span>
             )}
           </div>
 
