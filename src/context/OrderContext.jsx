@@ -6,10 +6,10 @@ const OrderContext=createContext();
 export const OrderProvider=({children})=>{
     const [orders,setOrders]=useState(null);
     const getOrders=async()=>{
-            const {data:ordersdata,error}=await supabase.from('orders').select('*');
+            const {data:ordersdata,error}=await supabase.from('orders').select('*').order("created_at",{ascending:false});
             setOrders(ordersdata);
          
-               
+            
     
         }
         useEffect(() => {
@@ -17,7 +17,7 @@ export const OrderProvider=({children})=>{
         }, []);
 
     return(
-        <OrderContext.Provider value={{orders,setOrders}}>
+        <OrderContext.Provider value={{orders,setOrders,getOrders}}>
             {children}
         </OrderContext.Provider>
     )

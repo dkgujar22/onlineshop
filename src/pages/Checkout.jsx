@@ -5,9 +5,11 @@ import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useOrder } from '../context/OrderContext';
 
 const Checkout = () => {
     const {cart,setCart}=useCart();
+    const {getOrders}=useOrder();
     const navigate=useNavigate();
     const {
     register,
@@ -67,6 +69,7 @@ const Checkout = () => {
     // }
     setModal(false)
     setCart([]);
+    getOrders();
      toast.success("order book successfully");
      setTimeout(() => {
            navigate('/')
@@ -198,7 +201,7 @@ const Checkout = () => {
         </button>
       </form>
     </div>  :
-         <button onClick={()=>navigate('/')}>do shopping first</button>
+         <button  className='d-block mx-auto mt-5 btn btn-warning' onClick={()=>navigate('/')}>do shopping first</button>
         
       }
         </>

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 
 
 const Cart = () => {
-    const {cart,handleStock,setCart,setQuantity}=useCart();
+    const {cart,setCart}=useCart();
     const navigate=useNavigate();
         
 
@@ -14,7 +14,7 @@ const Cart = () => {
       setCart(cart.map((c)=>c.id===id?{...c,quantity:c.quantity+1}:c));
     }
     const handleDecrement=(id)=>{
-      setCart(cart.map((c)=>c.id===id?{...c,quantity:c.quantity-1}:c));
+      setCart(cart.map((c)=>c.id===id?{...c,quantity:c.quantity>0?c.quantity-1:0}:c));
     }
     const removeCartitem=(id)=>{
       setCart(cart.filter((i)=>i.id!==id));
