@@ -48,9 +48,10 @@ export const CustAuthProvider=({children})=>{
     const googleLogin=async()=>{
         const {error}=await supabase.auth.signInWithOAuth({
             provider:'google',
-            options: {
-                redirectTo: window.location.origin,
-    },
+             options: {
+                redirectTo: "https://onlineshop-sepia-seven.vercel.app/"
+            }
+           
         })
 
         if (error){
