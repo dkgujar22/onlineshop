@@ -83,7 +83,7 @@ const Navbar = () => {
 
               <div className="user-info">
                 <FaUser className="user-icon" />
-                <span>{cust.name || cust.email}</span>
+                <span>{cust.name}</span>
               </div>
 
               <button
