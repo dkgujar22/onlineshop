@@ -24,7 +24,7 @@ const UserLogin = () => {
     } else {
       
           setIslogin(false)
-          toast.success("Login successfully")
+          // toast.success("Login successfully")
           navigate(redirectTo, { replace: true });
         
     }
