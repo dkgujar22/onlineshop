@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const {name,setName,email,setEmail,password,setPassword,signUp}=useAuth();
@@ -8,12 +10,12 @@ const Signup = () => {
     const error=await signUp();
     if(error){
       // console.log(error.message);
-      alert(error.message)
+      toast.error(error.message)
       // console.log("Email:", `"${email}"`);
       // console.log("Type:", typeof email);
     }
     else{
-      alert("Account created successfully")
+      toast.info("Account created successfully")
   }
 
   }
@@ -39,6 +41,7 @@ const Signup = () => {
 
        {/* <button className=' btn-color  text-light border-0 '>Signup</button> */}
        <button type="button"  onClick={handleSignup} class="px-2 py-1 mb-2 set-input-width btn btn-primary">Signup</button>
+       <ToastContainer/>
     </div>
   )
 }

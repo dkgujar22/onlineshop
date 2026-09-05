@@ -4,6 +4,8 @@ import { supabase } from '../../supabaseClient';
 import '../../css/Order.css'
 import { useCart } from '../../context/CartContext';
 import { useOrder } from '../../context/OrderContext';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Orders = () => {
 
     const {handleStock,custorderitem,setCustorderitem}=useCart();
@@ -58,7 +60,7 @@ const Orders = () => {
            ord.id===alterstatusid?{...ord,status:"delivered"}:ord
         ))
         setOrders(updateorderData)
-        alert("order delivered successfully")
+        toast.success("Order Delivered Successfully")
         
         
     }
@@ -234,7 +236,7 @@ const Orders = () => {
                     </div>
       </div>
 
-     
+     <ToastContainer/>
     </div>
   )
 }

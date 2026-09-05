@@ -64,7 +64,7 @@ import { supabase } from "../supabaseClient";
     return error
   }
   const editData=async(productname,category,price,stock,image_url)=>{
-   const {data,error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',pId)
+   const {error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',pId)
   //  console.log(data);
   return error
   }

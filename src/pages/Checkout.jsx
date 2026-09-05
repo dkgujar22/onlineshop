@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { supabase } from '../supabaseClient';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router';
-import { toast, ToastContainer } from 'react-toast';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Checkout = () => {
     const {cart,setCart}=useCart();
@@ -17,10 +18,7 @@ const Checkout = () => {
     mode: 'onTouched',
   });
   const [modal,setModal]=useState(true)
-  useEffect(()=>{
-    console.log(cart);
-    
-  },[])
+  
 
   const Totalamount=cart.reduce((sum,item)=>Number(item.price)*(item.quantity)+sum,0)
 
@@ -38,13 +36,13 @@ const Checkout = () => {
         total_amount:Totalamount,
         status: "pending"
     }]).select().single()
-    if(orderdetailError){
-        console.log(orderdetailError.message);
-    }
-    else{
-      console.log(orderdetail);
+    // if(orderdetailError){
+    //     console.log(orderdetailError.message);
+    // }
+    // else{
+    //   console.log(orderdetail);
       
-    }
+    // }
 
     const orderitems=cart.map((item)=>({
         order_id:orderdetail.id,
@@ -56,12 +54,12 @@ const Checkout = () => {
     }))
 
     const {data:custorderitems,error:orderitemsError}=await supabase.from('order_items').insert(orderitems);
-    if(orderitemsError){
-        console.log(orderitemsError.message);
+    // if(orderitemsError){
+    //     console.log(orderitemsError.message);
         
-    }else{
-        console.log(custorderitems);
-    }
+    // }else{
+    //     console.log(custorderitems);
+    // }
         
     // }
     // else{
@@ -70,7 +68,10 @@ const Checkout = () => {
     setModal(false)
     setCart([]);
      toast.success("order book successfully");
-     navigate('/')
+     setTimeout(() => {
+           navigate('/')
+     }, 2000);
+    
 
 
     

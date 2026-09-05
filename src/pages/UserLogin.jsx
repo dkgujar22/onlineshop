@@ -3,12 +3,13 @@ import { useAuth } from "../context/AuthContext";
 import { NavLink, replace, useNavigate, useSearchParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { useCust } from "../context/CustomerAuthContext";
-import { toast, ToastContainer } from "react-toast";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserLogin = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const [islogin,setIslogin]=useState(false)
-  const{login}=useCust();
+  const{login,googleLogin}=useCust();
   const [params] = useSearchParams();
  
    const navigate = useNavigate();
@@ -23,14 +24,11 @@ const UserLogin = () => {
     } else {
       
           setIslogin(false)
+          toast.success("Login successfully")
           navigate(redirectTo, { replace: true });
-    
-     
+        
     }
   };
-  const handleGoogleLogin=()=>{
-
-  }
 
   return (
     <div>
@@ -101,7 +99,7 @@ const UserLogin = () => {
           <button
             type="button"
             className="btn btn-outline-dark w-100"
-            onClick={handleGoogleLogin}
+            onClick={googleLogin}
           >
             {" "}
             <i className="bi bi-google me-2"></i> Continue with Google{" "}

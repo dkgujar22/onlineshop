@@ -1,11 +1,12 @@
 import React, { useEffect} from 'react'
 import { useCart } from '../../context/CartContext';
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from 'react-toast';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Addproductpage = () => {
 
-  const {editData,addData,product,handleEdit,sethandleEdit}=useCart()
+  const {editData,addData,product,setProduct,handleEdit,sethandleEdit}=useCart()
 
   const {
     register,
@@ -14,18 +15,26 @@ const Addproductpage = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const image = data.image[0];
-    if (handleEdit) {
-      handleUpdate(data);
-      // toast.warning("data updated successfully")
+    try {
+       if (handleEdit) {
+      await  handleUpdate(data);
+      toast.success("data updated successfully")
       reset();
     } else {
-      addData(data.productname,data.category,data.price,data.stock,image);
-      toast.success("data added")
+     await addData(data.productname,data.category,data.price,data.stock,image);
+     toast.success("data added successfully")
+     reset();
     }
+      
+    } catch (error) {
+      toast.error(error.message)
+      
+    }
+   
 
-    reset();
+    
   };
   useEffect(() => {
   if (product) {
@@ -42,17 +51,12 @@ const Addproductpage = () => {
 }, [product, reset]);
 
   const handleUpdate=async(data)=>{
-     const error=await editData(data.productname,data.category,data.price,data.stock);
-    if(error){
-      toast.error(error.message)
-    }else{
-      // alert("row updated successfully")
-      toast.success("Data updated successfully")
-      reset()
-      sethandleEdit(false)
+     await editData(data.productname,data.category,data.price,data.stock);
+     sethandleEdit(false)
+     setProduct(null)
 
     }
-  }
+  
   
   return (
     <div className="container py-5">

@@ -1,4 +1,7 @@
-/* Navigation Container */
+/* ==============================
+   Navigation
+================================= */
+
 .navbar {
   background-color: #0f172a;
   position: sticky;
@@ -12,12 +15,18 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0.85rem 1.5rem;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+
+  width: 100%;
 }
 
-/* Brand Logo */
+
+/* ==============================
+   Brand
+================================= */
+
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 700;
@@ -31,27 +40,40 @@
   color: #818cf8;
 }
 
-/* Desktop Navigation Menu */
+
+/* ==============================
+   Navigation Menu
+================================= */
+
 .navbar-menu {
   display: flex;
   align-items: center;
-  gap: 2rem;
+
+  margin-left: 2.5rem;
 }
 
 .navbar-links {
   display: flex;
+  align-items: center;
+
   list-style: none;
+
   margin: 0;
   padding: 0;
+
   gap: 1.5rem;
 }
 
 .nav-item-link {
   color: #94a3b8;
+
   text-decoration: none;
+
   font-size: 0.95rem;
   font-weight: 500;
+
   transition: color 0.2s ease;
+
   padding: 0.5rem 0;
 }
 
@@ -61,25 +83,49 @@
 
 .nav-item-link.active {
   color: #ffffff;
+
   font-weight: 600;
+
   border-bottom: 2px solid #6366f1;
 }
 
-/* Cart Icon & Badge */
-.navbar-cart-wrapper {
+
+/* ==============================
+   Right Side
+   Cart + Desktop Auth + Hamburger
+================================= */
+
+.navbar-right {
+  margin-left: auto;
+
   display: flex;
   align-items: center;
+
+  gap: 1rem;
 }
+
+
+/* ==============================
+   Cart
+================================= */
 
 .cart-link {
   position: relative;
+
   color: #ffffff;
+
   font-size: 1.25rem;
+
   display: flex;
   align-items: center;
+  justify-content: center;
+
   text-decoration: none;
+
   padding: 0.5rem;
+
   border-radius: 0.375rem;
+
   transition: background-color 0.2s ease;
 }
 
@@ -93,61 +139,203 @@
 
 .cart-badge {
   position: absolute;
+
   top: -2px;
   right: -6px;
+
   background-color: #ef4444;
+
   color: #ffffff;
-  font-size: 0.75rem;
+
+  font-size: 0.7rem;
   font-weight: 700;
+
   min-width: 18px;
   height: 18px;
+
   border-radius: 9999px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 0 4px;
+
   box-shadow: 0 0 0 2px #0f172a;
 }
 
-/* Mobile Hamburger Toggle */
+
+/* ==============================
+   User
+================================= */
+
+.user-info {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.user-icon {
+  font-size: 18px;
+}
+
+
+/* ==============================
+   Desktop Auth
+================================= */
+
+.desktop-auth {
+  display: flex;
+  align-items: center;
+}
+
+.desktop-user-section {
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+}
+
+.logout-btn {
+  font-size: 0.85rem;
+
+  padding: 0.4rem 0.8rem;
+}
+
+
+/* ==============================
+   Mobile Auth
+================================= */
+
+.mobile-auth {
+  display: none;
+}
+
+.mobile-user-section {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 1rem;
+
+  width: 100%;
+}
+
+
+/* ==============================
+   Hamburger
+================================= */
+
 .navbar-toggle {
   display: none;
+
   flex-direction: column;
   justify-content: space-between;
+
   width: 24px;
   height: 18px;
+
   background: transparent;
+
   border: none;
+
   cursor: pointer;
+
   padding: 0;
 }
 
 .navbar-toggle .bar {
   height: 2px;
   width: 100%;
+
   background-color: #ffffff;
+
   border-radius: 2px;
+
   transition: all 0.3s ease;
 }
 
-/* Mobile Responsiveness */
+
+/* ==============================
+   Mobile
+================================= */
+
 @media (max-width: 768px) {
-  .navbar-toggle {
+
+  .navbar-container {
+    padding: 0.85rem 1rem;
+  }
+
+
+  /* ==============================
+     Right Side
+  ================================= */
+
+  .navbar-right {
+    margin-left: auto;
+
+    gap: 0.7rem;
+  }
+
+
+  /* Cart stays visible */
+  .cart-link {
     display: flex;
   }
 
+
+  /* ==============================
+     Desktop Auth Hidden
+  ================================= */
+
+  .desktop-auth {
+    display: none;
+  }
+
+
+  /* ==============================
+     Hamburger Visible
+  ================================= */
+
+  .navbar-toggle {
+    display: flex;
+
+    margin-left: 0.2rem;
+  }
+
+
+  /* ==============================
+     Mobile Menu
+  ================================= */
+
   .navbar-menu {
     position: absolute;
+
     top: 100%;
     left: 0;
     right: 0;
+
     background-color: #0f172a;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem;
-    gap: 1.25rem;
-    border-top: 1px solid #1e293b;
+
     display: none;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    margin-left: 0;
+
+    padding: 1.5rem;
+
+    border-top: 1px solid #1e293b;
+
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
   }
 
@@ -155,20 +343,76 @@
     display: flex;
   }
 
+
+  /* ==============================
+     Mobile Links
+  ================================= */
+
   .navbar-links {
     flex-direction: column;
+
+    align-items: flex-start;
+
     width: 100%;
+
     gap: 1rem;
+  }
+
+  .navbar-links li {
+    width: 100%;
   }
 
   .nav-item-link {
     display: block;
+
+    width: 100%;
+
+    padding: 0.5rem 0;
+  }
+
+
+  /* ==============================
+     Mobile Login / User
+  ================================= */
+
+  .mobile-auth {
+    display: block;
+
     width: 100%;
   }
 
-  /* Hamburger transform animation */
+  .mobile-auth .user-info {
+    padding: 0.5rem 0;
+  }
+
+  .mobile-auth .btn {
+    width: 100%;
+  }
+
+  .mobile-user-section {
+    width: 100%;
+  }
+
+
+  /* ==============================
+     User
+  ================================= */
+
+  .user-info span {
+    display: inline;
+  }
+
+  .user-icon {
+    font-size: 18px;
+  }
+
+
+  /* ==============================
+     Hamburger Animation
+  ================================= */
+
   .navbar-toggle.open .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45px);
+    transform: translateY(8px) rotate(45deg);
   }
 
   .navbar-toggle.open .bar:nth-child(2) {
@@ -176,6 +420,7 @@
   }
 
   .navbar-toggle.open .bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45px);
+    transform: translateY(-8px) rotate(-45deg);
   }
+
 }

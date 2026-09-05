@@ -45,8 +45,23 @@ export const CustAuthProvider=({children})=>{
         }
     }
 
+    const googleLogin=async()=>{
+        const {error}=await supabase.auth.signInWithOAuth({
+            provider:'google',
+            options: {
+                redirectTo: window.location.origin,
+    },
+        })
+
+        if (error){
+            console.log(error.message);
+            
+        }
+    }
+
     const logout=async()=>{
         await supabase.auth.signOut();
+        
 
     }
 
@@ -64,7 +79,7 @@ export const CustAuthProvider=({children})=>{
 
 
     return(
-        <CustomerAuthContext.Provider value={{cust,setCust,requiresecondAuth,login,signIn,logout}}>
+        <CustomerAuthContext.Provider value={{cust,setCust,requiresecondAuth,login,signIn,googleLogin,logout}}>
             {children}
         </CustomerAuthContext.Provider>
     )

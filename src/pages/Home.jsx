@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const handleData = async () => {
       const getdata = await fetchData();
-       console.log(getdata);
+      //  console.log(getdata);
       if (getdata) setData(getdata);
     };
     handleData();
