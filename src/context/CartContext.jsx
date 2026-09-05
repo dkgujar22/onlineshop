@@ -4,11 +4,6 @@ import { supabase } from "../supabaseClient";
  const CartContext=createContext();
 
  export const CartProvider=({children})=>{
-    // const [productname,setProductName]=useState('')
-    // const [category,setCategory]=useState('');
-    // const [price,setPrice]=useState('');
-    // const [stock,setStock]=useState('');
-    // const [file,setFile]=useState(null);
     const [handleEdit,sethandleEdit]=useState(false)
     const [pId,setPid]=useState(0);
     const [data,setData]=useState([]);
@@ -48,9 +43,8 @@ import { supabase } from "../supabaseClient";
     }
 
   }
-    
-  
-  const fetchData=async()=>{
+
+    const fetchData=async()=>{
     const {data,error}=await supabase.from("admin_table").select("*").order('id', { ascending: true })
     if(!error){
       setData(data)
@@ -63,8 +57,8 @@ import { supabase } from "../supabaseClient";
     const {error}=await supabase.from('admin_table').delete().eq('id',id)
     return error
   }
-  const editData=async(productname,category,price,stock,image_url)=>{
-   const {error}=await supabase.from('admin_table').update({productname,category,price,stock,image_url}).eq('id',pId)
+  const editData=async(productname,category,price,stock)=>{
+   const {error}=await supabase.from('admin_table').update({productname,category,price,stock}).eq('id',pId)
   //  console.log(data);
   return error
   }

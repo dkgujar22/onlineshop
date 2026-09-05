@@ -77,11 +77,7 @@ const Checkout = () => {
     
     reset();
   };
-  // const handleOrder=()=>{
-  //   // setCart([]);
-  //   toast.success("order book successfully")
-  //   alert("order book successfully")
-  // }
+  
   return (
     <>
     {
@@ -121,7 +117,7 @@ const Checkout = () => {
           <input
             id="phone"
             type="tel"
-            placeholder="+1 (555) 000-0000"
+            placeholder="03334545777"
             {...register('phone', {
               required: 'Phone number is required',
               pattern: {
@@ -163,7 +159,7 @@ const Checkout = () => {
             <input
               id="country"
               type="text"
-              placeholder="San Francisco"
+              placeholder="Country"
               {...register('country', { required: 'Country is required' })}
               className={`form-input ${errors.city ? 'input-error' : ''}`}
             />

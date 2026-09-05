@@ -40,9 +40,9 @@ const DashSidebar = ({ closeMobileMenu }) => {
       {/* Navigation */}
       <nav className="flex-grow-1">
 
-        <p className="text-uppercase text-muted small fw-bold px-3 mb-2">
+        {/* <p className="text-uppercase text-muted small fw-bold px-3 mb-2">
           Menu
-        </p>
+        </p> */}
 
         <ul className="nav flex-column gap-2">
 
